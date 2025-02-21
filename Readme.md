@@ -20,7 +20,7 @@ This project sets up a MATLAB TCP server that can execute MATLAB scripts and com
 │ ├── Dockerfile
 │ └── main.py
 └── output/
-└── sine_wave.png
+  └── sine_wave.png
 ``` 
 
 ## Configuration
@@ -31,7 +31,7 @@ The `config.json` file controls the parameters for the MATLAB script execution:
 
 ```JSON
 {
-"script_name": "testscript.m",
+"script_name": "sinus.m",
 "params": [5, 0.5, 0, 0.1, 10]
 }
 ```
@@ -78,7 +78,7 @@ docker-compose up
   - `12345:12345` (TCP Server)
 - Volumes:
   - `./scripts`: MATLAB scripts directory
-  - `./instrument`: MATLAB Instrument Control Toolbox
+  - `./scripts/Add-Ons/instrument`: MATLAB Instrument Control Toolbox
 
 ### Python Controller
 - Container name: `python-controller`
