@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  matlab_service:
+    container_name: matlab-scripts
+    image: "matlab-login"
+    ports:
+     - "8888:8888"
+     - "12345:12345"  # Added TCP server port
+    volumes:
+     - ./scripts:/home/matlab/Documents/MATLAB
+    tty: true
+    stdin_open: true
+    networks:
+      - matlab-net
+
+  controller:
+    container_name: python-controller
+    build: 
+      context: ./controller
+      dockerfile: Dockerfile
+    volumes:
+      - ./output:/app/output  # Add this volume for saving plots
+      - ./config.json:/app/config.json  # Added config file mount
+    networks:
+      - matlab-net
+    depends_on:
+      - matlab_service
+
+networks:
+  matlab-net:
+    driver: bridge
