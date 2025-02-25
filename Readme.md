@@ -50,7 +50,7 @@ Parameters for the sine wave:
 
 2. Run a MATLAB container.
 ```BASH
-docker run –it --rm –n matlab-container mathworks/matlab:r2024b matlab –licmode onlinelicensing
+docker run -it --rm mathworks/matlab:r2024b matlab -n matlab-container -licmode onlinelicensing
 ```
 3. Login in the CLI of the running container.
 
