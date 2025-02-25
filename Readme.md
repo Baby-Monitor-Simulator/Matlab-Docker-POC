@@ -15,7 +15,8 @@ This project sets up a MATLAB TCP server that can execute MATLAB scripts and com
 ├── config.json
 ├── scripts/
 │ ├── startup.m
-│ └── testscript.m
+│ └── cosinus.m
+| └── sinus.m
 ├── controller/
 │ ├── Dockerfile
 │ └── main.py
