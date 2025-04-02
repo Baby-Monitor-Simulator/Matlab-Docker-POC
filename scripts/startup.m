@@ -1,55 +1,69 @@
-% Add instrument toolbox path
+% List available toolboxes
+disp('Listing available toolboxes...');
+toolboxes = matlab.addons.toolbox.installedToolboxes;
+disp('Available toolboxes:');
+for i = 1:numel(toolboxes)
+    disp([num2str(i) '. ' toolboxes(i).Name]);
+end
+
+% Debug: Show structure of toolboxes
+disp('Toolbox structure:');
+disp(toolboxes);
+
+% Check available communication functions
+disp('Checking available communication functions...');
+functions_to_check = {'tcpclient', 'tcpserver', 'tcpip', 'write', 'webread', 'webwrite', 'mqttclient'};
+for i = 1:numel(functions_to_check)
+    func = functions_to_check{i};
+    if exist(func, 'file') == 2
+        disp(['Found function: ' func]);
+    else
+        disp(['Not found: ' func]);
+    end
+end
+
+% Check and add toolbox paths if they are installed
+disp('Checking installed toolboxes and adding their paths...');
+
+% Define toolbox paths
+icommPath = '/home/matlab/Documents/MATLAB/Add-Ons/icomm';
 instrumentPath = '/home/matlab/Documents/MATLAB/Add-Ons/instrument';
+
+% Check for icomm toolbox
+if exist(icommPath, 'dir')
+    disp(['Found icomm directory at: ' icommPath]);
+    disp(['Adding icomm Toolbox path: ' icommPath]);
+    addpath(genpath(icommPath));
+else
+    warning('Icomm directory not found at: %s', icommPath);
+end
+
+% Check for instrument toolbox
 if exist(instrumentPath, 'dir')
+    disp(['Found instrument directory at: ' instrumentPath]);
     disp(['Adding Instrument Toolbox path: ' instrumentPath]);
     addpath(genpath(instrumentPath));
 else
-    error('Instrument directory not found at: %s', instrumentPath);
+    warning('Instrument directory not found at: %s', instrumentPath);
 end
 
-% Additional verification
-disp('Checking for TCP/IP functions...');
-which tcpserver
-which tcpip
+% List contents of Add-Ons directory
+disp('Contents of Add-Ons directory:');
+dir('/home/matlab/Documents/MATLAB/Add-Ons/');
 
-try
-    % Create TCP/IP server
-    server = tcpserver('0.0.0.0', 12345);
-    disp('Server created successfully');
-    cleanupObj = onCleanup(@() delete(server)); % Ensure server cleanup on script termination
-    
-    % Keep MATLAB running and listening for connections
-    disp('MATLAB server started on port 12345');
-    while true
-        % Check if client is connected and data is available
-        if server.Connected && server.NumBytesAvailable > 0
-            data = read(server, server.NumBytesAvailable, "char");
-            try
-                command = jsondecode(data);
-                script_path = command.script;
-                params = command.params;
-                try
-                    % Convert params from cell to array if needed
-                    if iscell(params)
-                        params = cell2mat(params);
-                    end
-                    result = feval(script_path(1:end-2), params(1), params(2), params(3), params(4), params(5));
-                    
-                    % Convert result to JSON and send it back
-                    jsonResult = jsonencode(result);
-                    write(server, jsonResult, "char");
-                    disp(['Sent result back to client: ' jsonResult]);
-                catch e
-                    disp(['Error executing script: ' e.message]);
-                    write(server, jsonencode(struct('error', e.message)), "char");
-                end
-            catch e
-                disp(['Error decoding JSON: ' e.message]);
-                write(server, jsonencode(struct('error', e.message)), "char");
-            end
-        end
-        pause(0.1); % Shorter pause for better responsiveness
-    end 
-catch e
-    disp(['Server error: ' e.message]);
+% Final check of communication functions after adding toolbox paths
+disp('Final check of communication functions after adding toolbox paths:');
+for i = 1:numel(functions_to_check)
+    func = functions_to_check{i};
+    if exist(func, 'file') == 2
+        disp(['Found function: ' func]);
+    else
+        disp(['Not found: ' func]);
+    end
+end
+
+% Keep the script running
+disp('MATLAB is running. Waiting for further instructions...');
+while true
+    pause(1);
 end

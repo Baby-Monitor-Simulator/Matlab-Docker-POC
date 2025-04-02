@@ -9,24 +9,59 @@ services:
      - "12345:12345"  # Added TCP server port
     volumes:
      - ./scripts:/home/matlab/Documents/MATLAB
+     - ./MATLAB/Add-Ons/instrument:/opt/matlab/R2024b/toolbox/instrument
+     - ./MATLAB/Add-Ons/icomm:/opt/matlab/R2024b/toolbox/icomm
     tty: true
     stdin_open: true
     networks:
       - matlab-net
+    dns:
+      - 8.8.8.8  # Google DNS for reliable internet access
+    environment:
+      - MATLAB_USE_INTERNET=true
+      - MATLAB_ADDONS_INSTALL_DIR=/opt/matlab/R2024b/
 
-  controller:
-    container_name: python-controller
-    build: 
-      context: ./controller
-      dockerfile: Dockerfile
-    volumes:
-      - ./output:/app/output  # Add this volume for saving plots
-      - ./config.json:/app/config.json  # Added config file mount
+  # controller:
+  #   container_name: python-controller
+  #   build: 
+  #     context: ./controller
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./output:/app/output  # Add this volume for saving plots
+  #     - ./config.json:/app/config.json  # Added config file mount
+  #   networks:
+  #     - matlab-net
+  #   depends_on:
+  #     - matlab_service
+
+  mqtt_bus:
+    container_name: mqtt-bus
+    image: hivemq/hivemq4
+    ports:
+      - "1883:1883"
+      - "8080:8080"
     networks:
       - matlab-net
     depends_on:
       - matlab_service
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8080"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
+  mqtt_reader:
+    container_name: mqtt-reader
+    build:
+      context: ./mqtt_reader
+      dockerfile: Dockerfile
+    networks:
+      - matlab-net
+    depends_on:
+      mqtt_bus:
+        condition: service_healthy
+  
 networks:
   matlab-net:
     driver: bridge
