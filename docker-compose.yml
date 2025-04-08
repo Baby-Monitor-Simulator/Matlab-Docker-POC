@@ -3,23 +3,22 @@ version: "3.8"
 services:
   matlab_service:
     container_name: matlab-scripts
-    image: "matlab-login"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: matlab-mqtt-poc:latest
     ports:
      - "8888:8888"
      - "12345:12345"  # Added TCP server port
     volumes:
-     - ./scripts:/home/matlab/Documents/MATLAB
-     - ./MATLAB/Add-Ons/instrument:/opt/matlab/R2024b/toolbox/instrument
-     - ./MATLAB/Add-Ons/icomm:/opt/matlab/R2024b/toolbox/icomm
+     - ./scripts:/home/matlab/Documents/MATLAB/scripts
+     - matlab_data:/home/matlab/.matlab  # Persistent volume for MATLAB data
     tty: true
     stdin_open: true
     networks:
       - matlab-net
     dns:
       - 8.8.8.8  # Google DNS for reliable internet access
-    environment:
-      - MATLAB_USE_INTERNET=true
-      - MATLAB_ADDONS_INSTALL_DIR=/opt/matlab/R2024b/
 
   # controller:
   #   container_name: python-controller
@@ -51,17 +50,20 @@ services:
       retries: 5
       start_period: 10s
 
-  mqtt_reader:
-    container_name: mqtt-reader
-    build:
-      context: ./mqtt_reader
-      dockerfile: Dockerfile
-    networks:
-      - matlab-net
-    depends_on:
-      mqtt_bus:
-        condition: service_healthy
+  # mqtt_reader:
+  #   container_name: mqtt-reader
+  #   build:
+  #     context: ./mqtt_reader
+  #     dockerfile: Dockerfile
+  #   networks:
+  #     - matlab-net
+  #   depends_on:
+  #     mqtt_bus:
+  #       condition: service_healthy
   
 networks:
   matlab-net:
     driver: bridge
+
+volumes:
+  matlab_data:  # Define the persistent volume

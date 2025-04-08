@@ -3,7 +3,7 @@
 %    %addpath(genpath(comms_path));
 %end
 
-client = mqttclient('tcp://localhost', ClientID="sim-runner", Port=1883);
+client = mqttclient('tcp://mqtt_bus', ClientID="sim-runner", Port=1883);
 disp("created writing client");
 
 range = 0:1:1000;
