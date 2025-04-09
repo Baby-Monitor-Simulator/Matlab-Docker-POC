@@ -1,4 +1,4 @@
-function result = sinus(a, f, ts, tsp, te)
+function result = sinus(a, f, ts, tsp, te, server)
     disp(['MATLAB: sinus called with params: a=' num2str(a) ', f=' num2str(f) ', ts=' num2str(ts) ', tsp=' num2str(tsp) ', te=' num2str(te)]);
     
     % Calculate number of points
@@ -8,11 +8,42 @@ function result = sinus(a, f, ts, tsp, te)
     % Generate time points
     T = linspace(ts, te, num_points);
     
-    % Calculate sine wave
-    y = a * sin(2 * pi * f * T);
-    disp(['MATLAB: First few values: ' num2str(y(1:min(5, length(y))))]);
+    % Calculate in chunks of 100 points
+    chunk_size = 100;
+    result = [];
     
-    % Return result
-    result = y;
-    disp('MATLAB: Returning result array');
+    for i = 1:chunk_size:num_points
+        % Check if server is still connected
+        if ~isempty(server) && ~server.Connected
+            disp('MATLAB: Server disconnected, stopping calculation');
+            break;
+        end
+        
+        % Calculate end index for this chunk
+        end_idx = min(i + chunk_size - 1, num_points);
+        
+        % Calculate sine wave for this chunk
+        chunk_T = T(i:end_idx);
+        chunk_y = a * sin(2 * pi * f * chunk_T);
+        
+        % Add to result
+        result = [result, chunk_y];
+        
+        % Send this chunk to the server
+        if ~isempty(server) && server.Connected
+            try
+                write(server, jsonencode(chunk_y), "char");
+                disp(['MATLAB: Sent chunk of ' num2str(length(chunk_y)) ' points']);
+            catch e
+                disp(['MATLAB: Error sending chunk: ' e.message]);
+                break;
+            end
+        end
+        
+        % Small pause to allow for data transmission
+        pause(0.01);
+    end
+    
+    disp(['MATLAB: First few values: ' num2str(result(1:min(5, length(result))))]);
+    disp('MATLAB: Calculation complete');
 end

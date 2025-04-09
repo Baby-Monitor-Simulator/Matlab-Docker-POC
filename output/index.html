@@ -209,13 +209,21 @@
                     // Create time points based on parameters
                     const startTime = parseFloat(document.getElementById('startTime').value);
                     const timeStep = parseFloat(document.getElementById('timeStep').value);
+                    const currentLength = chart.data.datasets[0].data.length;
+                    
+                    // Calculate the starting time for this chunk
+                    const chunkStartTime = startTime + (currentLength * timeStep);
+                    
+                    // Create points for this chunk
                     const points = data.map((value, index) => ({
-                        x: startTime + (index * timeStep),
+                        x: chunkStartTime + (index * timeStep),
                         y: value
                     }));
                     
                     console.log('Frontend: First few points:', points.slice(0, 5));
-                    chart.data.datasets[0].data = points;
+                    
+                    // Append new points to existing data
+                    chart.data.datasets[0].data = [...chart.data.datasets[0].data, ...points];
                     chart.update();
                 }
             };

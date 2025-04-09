@@ -49,20 +49,34 @@ async def websocket_handler(request):
                 print(f"Controller: Parsed frontend message: {data}")
                 
                 if data.get('type') == 'start':
+                    # Reset state for new run
+                    if matlab_socket:
+                        matlab_socket.close()
+                        matlab_socket = None
+                    
                     current_script = data.get('script', 'sinus.m')
                     current_params = data.get('params')
                     is_running = True
                     print(f"Controller: Starting script {current_script} with params {current_params}")
                     
-                    # Start MATLAB communication
-                    await send_script_to_matlab(current_script, current_params, ws)
+                    # Send started status to frontend
+                    await ws.send_json({'status': 'started'})
+                    
+                    # Start MATLAB communication in a separate task
+                    asyncio.create_task(send_script_to_matlab(current_script, current_params, ws))
                     
                 elif data.get('type') == 'stop':
                     is_running = False
                     if matlab_socket:
-                        stop_command = {"type": "stop"}
-                        print(f"Controller: Sending stop command to MATLAB: {stop_command}")
-                        matlab_socket.send(json.dumps(stop_command).encode())
+                        try:
+                            stop_command = {"type": "stop"}
+                            print(f"Controller: Sending stop command to MATLAB: {stop_command}")
+                            matlab_socket.send(json.dumps(stop_command).encode())
+                        except:
+                            print("Controller: Error sending stop command")
+                        finally:
+                            matlab_socket.close()
+                            matlab_socket = None
                     await ws.send_json({'status': 'stopped'})
                     print("Controller: Sent stopped status to frontend")
                     
@@ -72,6 +86,9 @@ async def websocket_handler(request):
     except Exception as e:
         print(f"Controller: WebSocket error: {e}")
     finally:
+        if matlab_socket:
+            matlab_socket.close()
+            matlab_socket = None
         return ws
 
 async def init_app():
@@ -161,54 +178,61 @@ def plot_data(data_file_path, params, script_name):
             current_figure = None
 
 async def send_script_to_matlab(script_name, params, ws):
+    """Send a script to MATLAB and get the response"""
     global matlab_socket
-    print("Controller: Waiting for MATLAB to start...")
-    time.sleep(30)  # Wait for MATLAB to fully start
-    
     try:
+        # Connect to MATLAB
         matlab_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         matlab_socket.connect(('matlab_service', 12345))
-        print("Controller: Connected to MATLAB successfully")
         
-        # Format command for MATLAB
+        # Prepare the command
         command = {
-            "script": script_name,
-            "params": params
+            'script': script_name,
+            'params': params
         }
-        command_json = json.dumps(command)
         
-        print(f"Controller: Sending to MATLAB: {command_json}")
-        matlab_socket.send(command_json.encode())
-        print("Controller: Command sent successfully")
+        # Send the command
+        matlab_socket.send(json.dumps(command).encode())
         
-        # Keep connection open and process responses
+        # Process responses
         while True:
+            # Read response
+            response = matlab_socket.recv(4096).decode()
+            if not response:
+                break
+                
             try:
-                response = matlab_socket.recv(4096)
-                if not response:
-                    print("Controller: No response received, connection may be closed")
-                    break
-                    
-                response_data = response.decode()
-                result = parse_matlab_response(response_data)
+                # Parse the response
+                data = json.loads(response)
                 
-                if result is not None:
-                    print(f"Controller: Forwarding to frontend: {result}")
-                    await ws.send_json(result)
-                    print("Controller: Data forwarded to frontend")
-                
-            except socket.error as e:
-                print(f"Controller: Socket error: {e}")
-                break
-            except Exception as e:
-                print(f"Controller: Error processing response: {e}")
-                break
+                # Check if it's a final result or incremental data
+                if isinstance(data, dict) and 'error' in data:
+                    raise Exception(f"MATLAB error: {data['error']}")
+                elif isinstance(data, dict) and 'status' in data:
+                    if data['status'] == 'stopped' or data['status'] == 'completed':
+                        break
+                else:
+                    # Handle incremental data
+                    if isinstance(data, list):
+                        # Write data points to file
+                        with open('data_points.txt', 'a') as f:
+                            for point in data:
+                                f.write(f"{point}\n")
+                        
+                        # Forward to WebSocket client
+                        await ws.send_json(data)
             
+            except json.JSONDecodeError:
+                print(f"Error decoding MATLAB response: {response}")
+                continue
+                
     except Exception as e:
-        print(f"Controller: Error occurred: {str(e)}")
+        print(f"Error in send_script_to_matlab: {str(e)}")
+        await ws.send_json({'error': str(e)})
     finally:
         if matlab_socket:
             matlab_socket.close()
+            matlab_socket = None
 
 if __name__ == "__main__":
     # Load initial parameters from config file

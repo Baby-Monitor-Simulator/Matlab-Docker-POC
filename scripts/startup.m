@@ -42,14 +42,14 @@ try
                 params = command.params;
                 disp(['MATLAB: Extracted params: ' jsonencode(params)]);
                 
-                % Execute the script with parameters
+                % Execute the script with parameters and pass the server
                 disp(['MATLAB: Executing ' command.script ' with params: ' jsonencode(params)]);
-                result = feval(command.script(1:end-2), params(1), params(2), params(3), params(4), params(5));
-                disp(['MATLAB: Calculated result: ' jsonencode(result)]);
+                result = feval(command.script(1:end-2), params(1), params(2), params(3), params(4), params(5), server);
+                disp(['MATLAB: Final result: ' jsonencode(result)]);
                 
-                % Send result back
-                write(server, jsonencode(result), "char");
-                disp('MATLAB: Sent result back to controller');
+                % Send completion status instead of final result
+                write(server, jsonencode(struct('status', 'completed')), "char");
+                disp('MATLAB: Sent completion status to controller');
                 
             catch e
                 disp(['MATLAB: Error: ' e.message]);
