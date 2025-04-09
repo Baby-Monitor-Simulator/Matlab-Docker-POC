@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MATLAB Data Viewer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .controls {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .connected {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .disconnected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MATLAB Data Viewer</h1>
+        
+        <div class="controls">
+            <button id="startBtn">Start</button>
+            <button id="stopBtn">Stop</button>
+            <div id="status" class="disconnected">Disconnected</div>
+        </div>
+
+        <canvas id="dataChart"></canvas>
+    </div>
+
+    <script>
+        // WebSocket connection
+        let ws;
+        let chart;
+        let dataPoints = [];
+        const MAX_POINTS = 10;  // Maximum number of points to display
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('dataChart').getContext('2d');
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'MATLAB Data',
+                    data: [],
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    pointRadius: 3,  // Make points more visible
+                    pointBackgroundColor: 'rgb(75, 192, 192)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Time (s)'
+                        },
+                        min: 0,  // Start at 0
+                        max: 10,  // Show up to 10 seconds
+                        ticks: {
+                            stepSize: 1  // Show ticks every second
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Amplitude'
+                        }
+                    }
+                },
+                animation: {
+                    duration: 0  // Disable animation for smoother updates
+                }
+            }
+        });
+
+        // WebSocket functions
+        function connect() {
+            console.log('Attempting to connect to WebSocket...');
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.hostname;
+            const port = window.location.port || '8765';
+            const wsUrl = `${protocol}//${host}:${port}/ws`;
+            console.log('WebSocket URL:', wsUrl);
+            
+            try {
+                ws = new WebSocket(wsUrl);
+                console.log('WebSocket object created, current state:', ws.readyState);
+                
+                ws.onopen = function() {
+                    console.log('WebSocket connection opened');
+                    document.getElementById('status').className = 'connected';
+                    document.getElementById('status').textContent = 'Connected';
+                };
+
+                ws.onclose = function(event) {
+                    console.log('WebSocket connection closed:', event.code, event.reason);
+                    document.getElementById('status').className = 'disconnected';
+                    document.getElementById('status').textContent = 'Disconnected';
+                    // Try to reconnect after 5 seconds
+                    console.log('Attempting to reconnect in 5 seconds...');
+                    setTimeout(connect, 5000);
+                };
+
+                ws.onerror = function(error) {
+                    console.error('WebSocket error:', error);
+                    document.getElementById('status').className = 'disconnected';
+                    document.getElementById('status').textContent = 'Error - Retrying...';
+                };
+
+                ws.onmessage = function(event) {
+                    console.log('Received WebSocket message:', event.data);
+                    try {
+                        const data = JSON.parse(event.data);
+                        console.log('Parsed message data:', data);
+                        
+                        if (data.status === 'started') {
+                            console.log('Session started, clearing previous data');
+                            // Clear previous data when starting new session
+                            chart.data.datasets[0].data = [];
+                            chart.update();
+                        }
+                        
+                        if (Array.isArray(data)) {
+                            console.log('Received data array with length:', data.length);
+                            
+                            // Format data for Chart.js
+                            const formattedData = data.map(point => ({
+                                x: point.x,
+                                y: point.y
+                            }));
+                            
+                            // Update chart data
+                            chart.data.datasets[0].data = formattedData;
+                            
+                            // Update chart
+                            chart.update();
+                            console.log('Chart updated with', chart.data.datasets[0].data.length, 'points');
+                        }
+                    } catch (e) {
+                        console.error('Error processing message:', e);
+                    }
+                };
+            } catch (e) {
+                console.error('Error creating WebSocket:', e);
+                document.getElementById('status').className = 'disconnected';
+                document.getElementById('status').textContent = 'Error - Retrying...';
+                setTimeout(connect, 5000);
+            }
+        }
+
+        // Button event listeners
+        document.getElementById('startBtn').addEventListener('click', function() {
+            console.log('Start button clicked');
+            a = 5;
+            f = 0.5;
+            ts = 0;
+            tsp = 0.1;
+            te = 1;
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                console.log('WebSocket not connected, attempting to connect...');
+                connect();
+                // Wait for connection to be established
+                setTimeout(() => {
+                    if (ws && ws.readyState === WebSocket.OPEN) {
+                        console.log('Sending start command, a=', a, ', f=', f, ', ts=', ts, ', tsp=', tsp, ', te=', te);
+                        ws.send(JSON.stringify({
+                            type: 'start',
+                            script: 'sinus.m',
+                            params: [a, f, ts, tsp, te]  // Default parameters
+                        }));
+                    } else {
+                        console.log('Failed to establish connection for start command');
+                    }
+                }, 1000);
+            } else {
+                
+                console.log('Sending start command, a=', a, ', f=', f, ', ts= ', ts, ', tsp=', tsp, ', te=', te);
+                ws.send(JSON.stringify({
+                    type: 'start',
+                    script: 'sinus.m',
+                    params: [a, f, ts, tsp, te]  // Default parameters
+                }));
+            }
+        });
+
+        document.getElementById('stopBtn').addEventListener('click', function() {
+            console.log('Stop button clicked');
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                try {
+                    console.log('Sending stop command');
+                    ws.send(JSON.stringify({
+                        type: 'stop'
+                    }));
+                } catch (e) {
+                    console.error('Error sending stop command:', e);
+                    connect(); // Try to reconnect
+                }
+            } else {
+                console.log('WebSocket not connected, attempting to connect...');
+                connect(); // Try to reconnect
+            }
+        });
+
+        // Initial connection
+        connect();
+    </script>
+</body>
+</html> 
