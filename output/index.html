@@ -23,6 +23,21 @@
             background-color: #f8f9fa;
             border-radius: 4px;
         }
+        .param-group {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .param-group label {
+            min-width: 100px;
+        }
+        .param-group input {
+            width: 100px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
         button {
             padding: 8px 16px;
             margin: 0 5px;
@@ -34,6 +49,10 @@
         }
         button:hover {
             background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
         }
         #status {
             margin-top: 10px;
@@ -55,8 +74,36 @@
         <h1>MATLAB Data Viewer</h1>
         
         <div class="controls">
-            <button id="startBtn">Start</button>
-            <button id="stopBtn">Stop</button>
+            <div class="param-group">
+                <label for="scriptSelect">Script:</label>
+                <select id="scriptSelect">
+                    <option value="sinus.m">sinus.m</option>
+                </select>
+            </div>
+            <div class="param-group">
+                <label for="amplitude">Amplitude:</label>
+                <input type="number" id="amplitude" value="5" step="0.1">
+            </div>
+            <div class="param-group">
+                <label for="frequency">Frequency (Hz):</label>
+                <input type="number" id="frequency" value="0.5" step="0.1">
+            </div>
+            <div class="param-group">
+                <label for="startTime">Start Time (s):</label>
+                <input type="number" id="startTime" value="0" step="0.1">
+            </div>
+            <div class="param-group">
+                <label for="timeStep">Time Step (s):</label>
+                <input type="number" id="timeStep" value="0.1" step="0.01">
+            </div>
+            <div class="param-group">
+                <label for="endTime">End Time (s):</label>
+                <input type="number" id="endTime" value="1" step="0.1">
+            </div>
+            <div class="param-group">
+                <button id="startBtn">Start</button>
+                <button id="stopBtn" disabled>Stop</button>
+            </div>
             <div id="status" class="disconnected">Disconnected</div>
         </div>
 
@@ -67,8 +114,7 @@
         // WebSocket connection
         let ws;
         let chart;
-        let dataPoints = [];
-        const MAX_POINTS = 10;  // Maximum number of points to display
+        let isRunning = false;
 
         // Initialize Chart.js
         const ctx = document.getElementById('dataChart').getContext('2d');
@@ -81,7 +127,7 @@
                     data: [],
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.1,
-                    pointRadius: 3,  // Make points more visible
+                    pointRadius: 3,
                     pointBackgroundColor: 'rgb(75, 192, 192)'
                 }]
             },
@@ -94,11 +140,6 @@
                         title: {
                             display: true,
                             text: 'Time (s)'
-                        },
-                        min: 0,  // Start at 0
-                        max: 10,  // Show up to 10 seconds
-                        ticks: {
-                            stepSize: 1  // Show ticks every second
                         }
                     },
                     y: {
@@ -110,141 +151,105 @@
                     }
                 },
                 animation: {
-                    duration: 0  // Disable animation for smoother updates
+                    duration: 0
                 }
             }
         });
 
         // WebSocket functions
         function connect() {
-            console.log('Attempting to connect to WebSocket...');
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const host = window.location.hostname;
             const port = window.location.port || '8765';
             const wsUrl = `${protocol}//${host}:${port}/ws`;
-            console.log('WebSocket URL:', wsUrl);
             
-            try {
-                ws = new WebSocket(wsUrl);
-                console.log('WebSocket object created, current state:', ws.readyState);
-                
-                ws.onopen = function() {
-                    console.log('WebSocket connection opened');
-                    document.getElementById('status').className = 'connected';
-                    document.getElementById('status').textContent = 'Connected';
-                };
+            ws = new WebSocket(wsUrl);
+            
+            ws.onopen = function() {
+                console.log('Frontend: WebSocket connection opened');
+                document.getElementById('status').className = 'connected';
+                document.getElementById('status').textContent = 'Connected';
+            };
 
-                ws.onclose = function(event) {
-                    console.log('WebSocket connection closed:', event.code, event.reason);
-                    document.getElementById('status').className = 'disconnected';
-                    document.getElementById('status').textContent = 'Disconnected';
-                    // Try to reconnect after 5 seconds
-                    console.log('Attempting to reconnect in 5 seconds...');
-                    setTimeout(connect, 5000);
-                };
+            ws.onclose = function() {
+                console.log('Frontend: WebSocket connection closed');
+                document.getElementById('status').className = 'disconnected';
+                document.getElementById('status').textContent = 'Disconnected';
+                setTimeout(connect, 5000);
+            };
 
-                ws.onerror = function(error) {
-                    console.error('WebSocket error:', error);
-                    document.getElementById('status').className = 'disconnected';
-                    document.getElementById('status').textContent = 'Error - Retrying...';
-                };
-
-                ws.onmessage = function(event) {
-                    console.log('Received WebSocket message:', event.data);
-                    try {
-                        const data = JSON.parse(event.data);
-                        console.log('Parsed message data:', data);
-                        
-                        if (data.status === 'started') {
-                            console.log('Session started, clearing previous data');
-                            // Clear previous data when starting new session
-                            chart.data.datasets[0].data = [];
-                            chart.update();
-                        }
-                        
-                        if (Array.isArray(data)) {
-                            console.log('Received data array with length:', data.length);
-                            
-                            // Format data for Chart.js
-                            const formattedData = data.map(point => ({
-                                x: point.x,
-                                y: point.y
-                            }));
-                            
-                            // Update chart data
-                            chart.data.datasets[0].data = formattedData;
-                            
-                            // Update chart
-                            chart.update();
-                            console.log('Chart updated with', chart.data.datasets[0].data.length, 'points');
-                        }
-                    } catch (e) {
-                        console.error('Error processing message:', e);
-                    }
-                };
-            } catch (e) {
-                console.error('Error creating WebSocket:', e);
+            ws.onerror = function() {
+                console.log('Frontend: WebSocket error');
                 document.getElementById('status').className = 'disconnected';
                 document.getElementById('status').textContent = 'Error - Retrying...';
-                setTimeout(connect, 5000);
-            }
+            };
+
+            ws.onmessage = function(event) {
+                console.log('Frontend: Received message:', event.data);
+                const data = JSON.parse(event.data);
+                
+                if (data.status === 'started') {
+                    console.log('Frontend: Session started');
+                    isRunning = true;
+                    document.getElementById('startBtn').disabled = true;
+                    document.getElementById('stopBtn').disabled = false;
+                    chart.data.datasets[0].data = [];
+                    chart.update();
+                }
+                
+                if (data.status === 'stopped') {
+                    console.log('Frontend: Session stopped');
+                    isRunning = false;
+                    document.getElementById('startBtn').disabled = false;
+                    document.getElementById('stopBtn').disabled = true;
+                }
+                
+                if (Array.isArray(data)) {
+                    console.log('Frontend: Received data array of length:', data.length);
+                    // Create time points based on parameters
+                    const startTime = parseFloat(document.getElementById('startTime').value);
+                    const timeStep = parseFloat(document.getElementById('timeStep').value);
+                    const points = data.map((value, index) => ({
+                        x: startTime + (index * timeStep),
+                        y: value
+                    }));
+                    
+                    console.log('Frontend: First few points:', points.slice(0, 5));
+                    chart.data.datasets[0].data = points;
+                    chart.update();
+                }
+            };
         }
+
+        // Start WebSocket connection
+        connect();
 
         // Button event listeners
         document.getElementById('startBtn').addEventListener('click', function() {
-            console.log('Start button clicked');
-            a = 5;
-            f = 0.5;
-            ts = 0;
-            tsp = 0.1;
-            te = 1;
-            if (!ws || ws.readyState !== WebSocket.OPEN) {
-                console.log('WebSocket not connected, attempting to connect...');
-                connect();
-                // Wait for connection to be established
-                setTimeout(() => {
-                    if (ws && ws.readyState === WebSocket.OPEN) {
-                        console.log('Sending start command, a=', a, ', f=', f, ', ts=', ts, ', tsp=', tsp, ', te=', te);
-                        ws.send(JSON.stringify({
-                            type: 'start',
-                            script: 'sinus.m',
-                            params: [a, f, ts, tsp, te]  // Default parameters
-                        }));
-                    } else {
-                        console.log('Failed to establish connection for start command');
-                    }
-                }, 1000);
-            } else {
-                
-                console.log('Sending start command, a=', a, ', f=', f, ', ts= ', ts, ', tsp=', tsp, ', te=', te);
-                ws.send(JSON.stringify({
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                const params = {
                     type: 'start',
-                    script: 'sinus.m',
-                    params: [a, f, ts, tsp, te]  // Default parameters
-                }));
+                    script: document.getElementById('scriptSelect').value,
+                    params: [
+                        parseFloat(document.getElementById('amplitude').value),
+                        parseFloat(document.getElementById('frequency').value),
+                        parseFloat(document.getElementById('startTime').value),
+                        parseFloat(document.getElementById('timeStep').value),
+                        parseFloat(document.getElementById('endTime').value)
+                    ]
+                };
+                console.log('Frontend: Sending start command:', params);
+                ws.send(JSON.stringify(params));
             }
         });
 
         document.getElementById('stopBtn').addEventListener('click', function() {
-            console.log('Stop button clicked');
             if (ws && ws.readyState === WebSocket.OPEN) {
-                try {
-                    console.log('Sending stop command');
-                    ws.send(JSON.stringify({
-                        type: 'stop'
-                    }));
-                } catch (e) {
-                    console.error('Error sending stop command:', e);
-                    connect(); // Try to reconnect
-                }
-            } else {
-                console.log('WebSocket not connected, attempting to connect...');
-                connect(); // Try to reconnect
+                const stopCommand = { type: 'stop' };
+                console.log('Frontend: Sending stop command:', stopCommand);
+                ws.send(JSON.stringify(stopCommand));
             }
         });
-
-        // Initial connection
-        connect();
     </script>
 </body>
 </html> 
