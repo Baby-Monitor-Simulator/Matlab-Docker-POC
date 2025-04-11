@@ -102,6 +102,7 @@
             </div>
             <div class="param-group">
                 <button id="startBtn">Start</button>
+                <button id="updateBtn" disabled>Update</button>
                 <button id="stopBtn" disabled>Stop</button>
             </div>
             <div id="status" class="disconnected">Disconnected</div>
@@ -193,6 +194,7 @@
                     isRunning = true;
                     document.getElementById('startBtn').disabled = true;
                     document.getElementById('stopBtn').disabled = false;
+                    document.getElementById('updateBtn').disabled = false;
                     chart.data.datasets[0].data = [];
                     chart.update();
                 }
@@ -202,6 +204,7 @@
                     isRunning = false;
                     document.getElementById('startBtn').disabled = false;
                     document.getElementById('stopBtn').disabled = true;
+                    document.getElementById('updateBtn').disabled = true;
                 }
                 
                 if (Array.isArray(data)) {
@@ -308,6 +311,36 @@
                 ws.send(JSON.stringify(stopCommand));
             } catch (error) {
                 console.error('Frontend: Error sending stop command:', error);
+            }
+        });
+
+        document.getElementById('updateBtn').addEventListener('click', function() {
+            if (!ws) {
+                console.error('Frontend: WebSocket not initialized');
+                return;
+            }
+            
+            if (ws.readyState !== WebSocket.OPEN) {
+                console.error('Frontend: WebSocket not connected, current state:', ws.readyState);
+                return;
+            }
+            
+            const updateCommand = {
+                type: 'update',
+                script: document.getElementById('scriptSelect').value,
+                params: [
+                    parseFloat(document.getElementById('amplitude').value),
+                    parseFloat(document.getElementById('frequency').value),
+                    parseFloat(document.getElementById('startTime').value),
+                    parseFloat(document.getElementById('timeStep').value),
+                    parseFloat(document.getElementById('endTime').value)
+                ]
+            };
+            console.log('Frontend: Sending update command:', updateCommand);
+            try {
+                ws.send(JSON.stringify(updateCommand));
+            } catch (error) {
+                console.error('Frontend: Error sending update command:', error);
             }
         });
     </script>

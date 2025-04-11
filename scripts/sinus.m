@@ -1,5 +1,6 @@
 function result = sinus(a, f, ts, tsp, te, server, should_stop)
-    disp(['MATLAB: sinus called with params: a=' num2str(a) ', f=' num2str(f) ', ts=' num2str(ts) ', tsp=' num2str(tsp) ', te=' num2str(te)]);
+    % Log received parameters
+    disp(['MATLAB: sinus received parameters: a=' num2str(a) ', f=' num2str(f) ', ts=' num2str(ts) ', tsp=' num2str(tsp) ', te=' num2str(te)]);
     
     % Calculate number of points
     num_points = floor((te - ts) / tsp) + 1;
@@ -43,6 +44,37 @@ function result = sinus(a, f, ts, tsp, te, server, should_stop)
             % Send this chunk to the server
             if server.Connected
                 try
+                    % Check if there are any pending commands
+                    if server.NumBytesAvailable > 0
+                        % Read and process the command
+                        data = read(server, server.NumBytesAvailable, "char");
+                        try
+                            command = jsondecode(data);
+                            if isfield(command, 'type')
+                                if strcmp(command.type, 'update')
+                                    disp('MATLAB: Update command received, pausing data sending');
+                                    % Process update directly
+                                    disp(['MATLAB: Processing update with params: ' jsonencode(command.params)]);
+                                    % Set should_stop to true first
+                                    should_stop = true;
+                                    % Return the new parameters
+                                    result = command.params;
+                                    % Send acknowledgment
+                                    write(server, jsonencode(struct('status', 'updated')), "char");
+                                    disp('MATLAB: Sent update acknowledgment');
+                                    return;
+                                elseif strcmp(command.type, 'stop')
+                                    disp('MATLAB: Stop command received');
+                                    should_stop = true;
+                                    return;
+                                end
+                            end
+                        catch
+                            disp('MATLAB: Error parsing command, continuing');
+                            continue;
+                        end
+                    end
+                    
                     write(server, jsonencode(chunk_y), "char");
                     disp(['MATLAB: Sent chunk of ' num2str(length(chunk_y)) ' points']);
                 catch e
@@ -54,8 +86,8 @@ function result = sinus(a, f, ts, tsp, te, server, should_stop)
                 break;
             end
             
-            % Small pause to allow for data transmission
-            pause(0.01);
+            % Add a small pause between chunks to allow for message processing
+            pause(0.05);
         end
         
         if should_stop || ~server.Connected
@@ -65,8 +97,8 @@ function result = sinus(a, f, ts, tsp, te, server, should_stop)
         disp(['MATLAB: First few values: ' num2str(result(1:min(5, length(result))))]);
         disp('MATLAB: Cycle complete, starting next cycle');
         
-        % Add a small delay between cycles
-        pause(0.1);
+        % Add a longer delay between cycles
+        pause(0.2);
     end
     
     disp('MATLAB: Continuous calculation stopped');

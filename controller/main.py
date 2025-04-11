@@ -111,20 +111,36 @@ async def websocket_handler(request):
                                 matlab_socket.send(json.dumps(stop_command).encode())
                                 print("Controller: Stop command sent to MATLAB")
                                 
-                                # Wait for MATLAB to acknowledge the stop
+                                # Wait for MATLAB to acknowledge the stop with timeout
                                 print("Controller: Waiting for MATLAB stop acknowledgment")
-                                response = matlab_socket.recv(4096).decode()
-                                print(f"Controller: Received MATLAB response: {response}")
+                                start_time = time.time()
+                                timeout = 5.0  # 5 second timeout
                                 
-                                try:
-                                    response_data = json.loads(response)
-                                    print(f"Controller: Parsed MATLAB response: {response_data}")
-                                    if isinstance(response_data, dict) and response_data.get('status') == 'stopped':
-                                        print("Controller: MATLAB acknowledged stop command")
-                                    else:
-                                        print("Controller: Unexpected MATLAB response to stop command")
-                                except json.JSONDecodeError:
-                                    print(f"Controller: Error decoding MATLAB response: {response}")
+                                while time.time() - start_time < timeout:
+                                    try:
+                                        response = matlab_socket.recv(4096).decode()
+                                        if response:
+                                            print(f"Controller: Received MATLAB response: {response}")
+                                            try:
+                                                response_data = json.loads(response)
+                                                print(f"Controller: Parsed MATLAB response: {response_data}")
+                                                if isinstance(response_data, dict) and response_data.get('status') == 'stopped':
+                                                    print("Controller: MATLAB acknowledged stop command")
+                                                    break
+                                                else:
+                                                    print("Controller: Unexpected MATLAB response to stop command")
+                                            except json.JSONDecodeError:
+                                                print(f"Controller: Error decoding MATLAB response: {response}")
+                                    except BlockingIOError:
+                                        # No data available yet, sleep briefly
+                                        await asyncio.sleep(0.1)
+                                        continue
+                                    except Exception as e:
+                                        print(f"Controller: Error reading MATLAB response: {e}")
+                                        break
+                                
+                                if time.time() - start_time >= timeout:
+                                    print("Controller: Timeout waiting for MATLAB stop acknowledgment")
                             except Exception as e:
                                 print(f"Controller: Error sending stop command: {e}")
                             finally:
@@ -144,6 +160,14 @@ async def websocket_handler(request):
                         # Send stopped status to frontend
                         print("Controller: Sending stopped status to frontend")
                         await ws.send_json({'status': 'stopped'})
+                    elif data.get('type') == 'update':
+                        print("Controller: Processing update command")
+                        if matlab_socket and is_running:
+                            # Create a separate task for the update
+                            asyncio.create_task(send_update_to_matlab(matlab_socket, data.get('params'), ws))
+                        else:
+                            print("Controller: No active MATLAB session to update")
+                            await ws.send_json({'error': 'No active session to update'})
                     else:
                         print(f"Controller: Unknown message type: {data.get('type')}")
                 except json.JSONDecodeError as e:
@@ -353,6 +377,65 @@ async def send_script_to_matlab(script_name, params, ws):
             matlab_socket = None
         is_running = False
         should_stop = False
+
+async def send_update_to_matlab(matlab_socket, params, ws):
+    """Send update command to MATLAB in a separate task"""
+    try:
+        update_command = {
+            'type': 'update',
+            'params': params
+        }
+        print(f"Controller: Sending update command to MATLAB: {update_command}")
+        
+        # Send the command
+        matlab_socket.send(json.dumps(update_command).encode())
+        print("Controller: Update command sent to MATLAB")
+        
+        # Wait for acknowledgment with timeout
+        print("Controller: Waiting for MATLAB update acknowledgment")
+        start_time = time.time()
+        timeout = 5.0  # 5 second timeout
+        acknowledgment_received = False
+        
+        while time.time() - start_time < timeout and not acknowledgment_received:
+            try:
+                response = matlab_socket.recv(4096).decode()
+                if response:
+                    print(f"Controller: Received MATLAB response: {response}")
+                    try:
+                        response_data = json.loads(response)
+                        if isinstance(response_data, dict):
+                            if response_data.get('status') == 'updated':
+                                print("Controller: MATLAB acknowledged update command")
+                                acknowledgment_received = True
+                                await ws.send_json({'status': 'updated'})
+                                break
+                            elif response_data.get('error'):
+                                print(f"Controller: MATLAB error: {response_data.get('error')}")
+                                await ws.send_json({'error': response_data.get('error')})
+                                break
+                        else:
+                            # If we receive data points, continue waiting for acknowledgment
+                            print("Controller: Received data points while waiting for acknowledgment, continuing to wait")
+                            continue
+                    except json.JSONDecodeError:
+                        print(f"Controller: Error decoding MATLAB response: {response}")
+                        continue
+            except BlockingIOError:
+                # No data available yet, sleep briefly
+                await asyncio.sleep(0.1)
+                continue
+            except Exception as e:
+                print(f"Controller: Error reading MATLAB response: {e}")
+                await ws.send_json({'error': str(e)})
+                break
+        
+        if not acknowledgment_received:
+            print("Controller: Timeout waiting for MATLAB update acknowledgment")
+            await ws.send_json({'error': 'Timeout waiting for MATLAB response'})
+    except Exception as e:
+        print(f"Controller: Error in update task: {e}")
+        await ws.send_json({'error': str(e)})
 
 if __name__ == "__main__":
     # Load initial parameters from config file
