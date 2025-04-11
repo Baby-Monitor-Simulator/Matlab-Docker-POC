@@ -21,6 +21,7 @@ matlab_socket = None
 current_figure = None  # Keep track of the current figure
 data_file = None  # File to store accumulated data
 last_progress_update = 0  # Track last progress update time
+should_stop = False  # Flag to control MATLAB execution
 
 def cleanup():
     """Cleanup function to ensure temporary file is removed on exit"""
@@ -36,57 +37,138 @@ def cleanup():
 atexit.register(cleanup)
 
 async def websocket_handler(request):
-    global current_script, current_params, is_running, matlab_socket
+    global current_script, current_params, is_running, matlab_socket, should_stop
     print("Controller: New WebSocket connection established")
     ws = web.WebSocketResponse()
     await ws.prepare(request)
+    print("Controller: WebSocket connection prepared")
     
     try:
+        print("Controller: WebSocket connection prepared, waiting for messages")
         async for msg in ws:
+            print(f"Controller: WebSocket message received, type: {msg.type}")
             if msg.type == aiohttp.WSMsgType.TEXT:
-                print(f"Controller: Received from frontend: {msg.data}")
-                data = json.loads(msg.data)
-                print(f"Controller: Parsed frontend message: {data}")
-                
-                if data.get('type') == 'start':
-                    # Reset state for new run
-                    if matlab_socket:
-                        matlab_socket.close()
-                        matlab_socket = None
+                print(f"Controller: Received WebSocket message: {msg.data}")
+                try:
+                    data = json.loads(msg.data)
+                    print(f"Controller: Parsed WebSocket message: {data}")
                     
-                    current_script = data.get('script', 'sinus.m')
-                    current_params = data.get('params')
-                    is_running = True
-                    print(f"Controller: Starting script {current_script} with params {current_params}")
-                    
-                    # Send started status to frontend
-                    await ws.send_json({'status': 'started'})
-                    
-                    # Start MATLAB communication in a separate task
-                    asyncio.create_task(send_script_to_matlab(current_script, current_params, ws))
-                    
-                elif data.get('type') == 'stop':
-                    is_running = False
-                    if matlab_socket:
-                        try:
-                            stop_command = {"type": "stop"}
-                            print(f"Controller: Sending stop command to MATLAB: {stop_command}")
-                            matlab_socket.send(json.dumps(stop_command).encode())
-                        except:
-                            print("Controller: Error sending stop command")
-                        finally:
-                            matlab_socket.close()
-                            matlab_socket = None
-                    await ws.send_json({'status': 'stopped'})
-                    print("Controller: Sent stopped status to frontend")
+                    if data.get('type') == 'start':
+                        print("Controller: Processing start command")
+                        # Reset state for new run
+                        if matlab_socket:
+                            print("Controller: Closing existing MATLAB socket")
+                            try:
+                                stop_command = {"type": "stop"}
+                                print(f"Controller: Sending stop command to MATLAB: {stop_command}")
+                                matlab_socket.send(json.dumps(stop_command).encode())
+                                print("Controller: Stop command sent to MATLAB")
+                                
+                                # Wait for MATLAB to acknowledge the stop
+                                print("Controller: Waiting for MATLAB stop acknowledgment")
+                                response = matlab_socket.recv(4096).decode()
+                                print(f"Controller: Received MATLAB response: {response}")
+                                
+                                try:
+                                    response_data = json.loads(response)
+                                    print(f"Controller: Parsed MATLAB response: {response_data}")
+                                    if isinstance(response_data, dict) and response_data.get('status') == 'stopped':
+                                        print("Controller: MATLAB acknowledged stop command")
+                                    else:
+                                        print("Controller: Unexpected MATLAB response to stop command")
+                                except json.JSONDecodeError:
+                                    print(f"Controller: Error decoding MATLAB response: {response}")
+                            except Exception as e:
+                                print(f"Controller: Error sending stop command: {e}")
+                            finally:
+                                print("Controller: Closing MATLAB socket")
+                                matlab_socket.close()
+                                matlab_socket = None
+                                # Add a small delay to ensure socket is fully closed
+                                await asyncio.sleep(0.5)
+                        
+                        current_script = data.get('script', 'sinus.m')
+                        current_params = data.get('params')
+                        is_running = True
+                        should_stop = False
+                        print(f"Controller: Starting script {current_script} with params {current_params}")
+                        
+                        # Send started status to frontend
+                        print("Controller: Sending started status to frontend")
+                        await ws.send_json({'status': 'started'})
+                        
+                        # Start MATLAB communication in a separate task
+                        print("Controller: Creating MATLAB communication task")
+                        asyncio.create_task(send_script_to_matlab(current_script, current_params, ws))
+                        
+                    elif data.get('type') == 'stop':
+                        print("Controller: Processing stop command")
+                        should_stop = True
+                        if matlab_socket:
+                            try:
+                                stop_command = {"type": "stop"}
+                                print(f"Controller: Sending stop command to MATLAB: {stop_command}")
+                                matlab_socket.send(json.dumps(stop_command).encode())
+                                print("Controller: Stop command sent to MATLAB")
+                                
+                                # Wait for MATLAB to acknowledge the stop
+                                print("Controller: Waiting for MATLAB stop acknowledgment")
+                                response = matlab_socket.recv(4096).decode()
+                                print(f"Controller: Received MATLAB response: {response}")
+                                
+                                try:
+                                    response_data = json.loads(response)
+                                    print(f"Controller: Parsed MATLAB response: {response_data}")
+                                    if isinstance(response_data, dict) and response_data.get('status') == 'stopped':
+                                        print("Controller: MATLAB acknowledged stop command")
+                                    else:
+                                        print("Controller: Unexpected MATLAB response to stop command")
+                                except json.JSONDecodeError:
+                                    print(f"Controller: Error decoding MATLAB response: {response}")
+                            except Exception as e:
+                                print(f"Controller: Error sending stop command: {e}")
+                            finally:
+                                print("Controller: Closing MATLAB socket")
+                                matlab_socket.close()
+                                matlab_socket = None
+                        else:
+                            print("Controller: No active MATLAB socket to stop")
+                        
+                        # Update state
+                        is_running = False
+                        should_stop = False
+
+                        # Add a small delay to ensure socket is fully closed
+                        await asyncio.sleep(0.5)
+                        
+                        # Send stopped status to frontend
+                        print("Controller: Sending stopped status to frontend")
+                        await ws.send_json({'status': 'stopped'})
+                    else:
+                        print(f"Controller: Unknown message type: {data.get('type')}")
+                except json.JSONDecodeError as e:
+                    print(f"Controller: Error decoding WebSocket message: {e}")
+                    print(f"Controller: Raw message: {msg.data}")
+                except Exception as e:
+                    print(f"Controller: Error processing WebSocket message: {e}")
+            elif msg.type == aiohttp.WSMsgType.ERROR:
+                print(f"Controller: WebSocket error: {msg.data}")
+            elif msg.type == aiohttp.WSMsgType.CLOSED:
+                print("Controller: WebSocket connection closed")
+            elif msg.type == aiohttp.WSMsgType.CLOSING:
+                print("Controller: WebSocket connection closing")
+            else:
+                print(f"Controller: Unhandled WebSocket message type: {msg.type}")
                     
     except websockets.exceptions.ConnectionClosed:
         print("Controller: WebSocket connection closed")
         is_running = False
+        should_stop = True
     except Exception as e:
         print(f"Controller: WebSocket error: {e}")
     finally:
         if matlab_socket:
+            print("Controller: Cleaning up MATLAB socket in WebSocket handler")
             matlab_socket.close()
             matlab_socket = None
         return ws
@@ -95,6 +177,7 @@ async def init_app():
     app = web.Application()
     app.router.add_get('/ws', websocket_handler)  # WebSocket endpoint
     app.router.add_static('/', pathlib.Path('/app/output'))  # Static files
+    print("Controller: WebSocket routes configured")
     return app
 
 async def start_websocket_server():
@@ -103,10 +186,12 @@ async def start_websocket_server():
     await runner.setup()
     site = web.TCPSite(runner, '0.0.0.0', 8765)
     await site.start()
-    print("Web server started on http://0.0.0.0:8765")
+    print("Controller: Web server started on http://0.0.0.0:8765")
+    print("Controller: Waiting for WebSocket connections...")
     await asyncio.Future()  # run forever
 
 def run_websocket_server():
+    print("Controller: Starting WebSocket server...")
     asyncio.run(start_websocket_server())
 
 def parse_matlab_response(response_data):
@@ -179,60 +264,95 @@ def plot_data(data_file_path, params, script_name):
 
 async def send_script_to_matlab(script_name, params, ws):
     """Send a script to MATLAB and get the response"""
-    global matlab_socket
+    global matlab_socket, should_stop
     try:
+        print("Controller: Connecting to MATLAB service")
         # Connect to MATLAB
         matlab_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         matlab_socket.connect(('matlab_service', 12345))
+        matlab_socket.setblocking(False)  # Make socket non-blocking
+        print("Controller: Connected to MATLAB service")
         
         # Prepare the command
         command = {
+            'type': 'start',
             'script': script_name,
             'params': params
         }
         
         # Send the command
+        print(f"Controller: Sending command to MATLAB: {command}")
         matlab_socket.send(json.dumps(command).encode())
+        print("Controller: Command sent to MATLAB")
         
         # Process responses
-        while True:
-            # Read response
-            response = matlab_socket.recv(4096).decode()
-            if not response:
+        while not should_stop:
+            try:
+                # Try to read response with timeout
+                response = matlab_socket.recv(4096).decode()
+                if not response:
+                    print("Controller: No response received from MATLAB")
+                    break
+                    
+                try:
+                    print(f"Controller: Received from MATLAB: {response}")
+                    # Parse the response
+                    data = json.loads(response)
+                    print(f"Controller: Parsed MATLAB response: {data}")
+                    
+                    # Check if it's a final result or incremental data
+                    if isinstance(data, dict) and 'error' in data:
+                        print(f"Controller: MATLAB error: {data['error']}")
+                        await ws.send_json({'error': data['error']})
+                        raise Exception(f"MATLAB error: {data['error']}")
+                    elif isinstance(data, dict) and 'status' in data:
+                        print(f"Controller: MATLAB status: {data['status']}")
+                        await ws.send_json(data)
+                        if data['status'] == 'stopped':
+                            print("Controller: Received stopped status from MATLAB")
+                            break
+                        elif data['status'] == 'completed':
+                            print("Controller: Received completed status from MATLAB")
+                            break
+                    else:
+                        # Handle incremental data
+                        if isinstance(data, list):
+                            print(f"Controller: Received {len(data)} data points from MATLAB")
+                            # Write data points to file
+                            with open('data_points.txt', 'a') as f:
+                                for point in data:
+                                    f.write(f"{point}\n")
+                            
+                            # Forward to WebSocket client
+                            print("Controller: Forwarding data to WebSocket client")
+                            try:
+                                await ws.send_json(data)
+                                print("Controller: Data forwarded successfully")
+                            except Exception as e:
+                                print(f"Controller: Error forwarding data to WebSocket: {e}")
+                except json.JSONDecodeError:
+                    print(f"Controller: Error decoding MATLAB response: {response}")
+            except BlockingIOError:
+                # No data available, sleep briefly and continue
+                await asyncio.sleep(0.1)
+                continue
+            except Exception as e:
+                print(f"Controller: Error in MATLAB communication: {e}")
                 break
                 
-            try:
-                # Parse the response
-                data = json.loads(response)
-                
-                # Check if it's a final result or incremental data
-                if isinstance(data, dict) and 'error' in data:
-                    raise Exception(f"MATLAB error: {data['error']}")
-                elif isinstance(data, dict) and 'status' in data:
-                    if data['status'] == 'stopped' or data['status'] == 'completed':
-                        break
-                else:
-                    # Handle incremental data
-                    if isinstance(data, list):
-                        # Write data points to file
-                        with open('data_points.txt', 'a') as f:
-                            for point in data:
-                                f.write(f"{point}\n")
-                        
-                        # Forward to WebSocket client
-                        await ws.send_json(data)
-            
-            except json.JSONDecodeError:
-                print(f"Error decoding MATLAB response: {response}")
-                continue
-                
     except Exception as e:
-        print(f"Error in send_script_to_matlab: {str(e)}")
-        await ws.send_json({'error': str(e)})
+        print(f"Controller: Error in send_script_to_matlab: {str(e)}")
+        try:
+            await ws.send_json({'error': str(e)})
+        except Exception as ws_error:
+            print(f"Controller: Error sending error to WebSocket: {ws_error}")
     finally:
         if matlab_socket:
+            print("Controller: Cleaning up MATLAB socket in send_script_to_matlab")
             matlab_socket.close()
             matlab_socket = None
+        is_running = False
+        should_stop = False
 
 if __name__ == "__main__":
     # Load initial parameters from config file

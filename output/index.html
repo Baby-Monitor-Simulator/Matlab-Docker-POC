@@ -233,29 +233,81 @@
         connect();
 
         // Button event listeners
-        document.getElementById('startBtn').addEventListener('click', function() {
-            if (ws && ws.readyState === WebSocket.OPEN) {
-                const params = {
-                    type: 'start',
-                    script: document.getElementById('scriptSelect').value,
-                    params: [
-                        parseFloat(document.getElementById('amplitude').value),
-                        parseFloat(document.getElementById('frequency').value),
-                        parseFloat(document.getElementById('startTime').value),
-                        parseFloat(document.getElementById('timeStep').value),
-                        parseFloat(document.getElementById('endTime').value)
-                    ]
-                };
-                console.log('Frontend: Sending start command:', params);
+        document.getElementById('startBtn').addEventListener('click', async function() {
+            if (!ws) {
+                console.error('Frontend: WebSocket not initialized');
+                return;
+            }
+            
+            if (ws.readyState !== WebSocket.OPEN) {
+                console.error('Frontend: WebSocket not connected, current state:', ws.readyState);
+                return;
+            }
+            
+            if (isRunning) {
+                console.error('Frontend: Session already running');
+                return;
+            }
+            
+            // First send stop command to ensure clean state
+            const stopCommand = { 
+                type: 'stop',
+                script: document.getElementById('scriptSelect').value
+            };
+            console.log('Frontend: Sending stop command to ensure clean state:', stopCommand);
+            try {
+                ws.send(JSON.stringify(stopCommand));
+                // Wait for 500ms to ensure stop is processed
+                await new Promise(resolve => setTimeout(resolve, 500));
+            } catch (error) {
+                console.error('Frontend: Error sending stop command:', error);
+            }
+            
+            // Then send start command
+            const params = {
+                type: 'start',
+                script: document.getElementById('scriptSelect').value,
+                params: [
+                    parseFloat(document.getElementById('amplitude').value),
+                    parseFloat(document.getElementById('frequency').value),
+                    parseFloat(document.getElementById('startTime').value),
+                    parseFloat(document.getElementById('timeStep').value),
+                    parseFloat(document.getElementById('endTime').value)
+                ]
+            };
+            console.log('Frontend: Sending start command:', params);
+            try {
                 ws.send(JSON.stringify(params));
+            } catch (error) {
+                console.error('Frontend: Error sending start command:', error);
             }
         });
 
         document.getElementById('stopBtn').addEventListener('click', function() {
-            if (ws && ws.readyState === WebSocket.OPEN) {
-                const stopCommand = { type: 'stop' };
-                console.log('Frontend: Sending stop command:', stopCommand);
+            if (!ws) {
+                console.error('Frontend: WebSocket not initialized');
+                return;
+            }
+            
+            if (ws.readyState !== WebSocket.OPEN) {
+                console.error('Frontend: WebSocket not connected, current state:', ws.readyState);
+                return;
+            }
+            
+            if (!isRunning) {
+                console.error('Frontend: No active session to stop');
+                return;
+            }
+            
+            const stopCommand = { 
+                type: 'stop',
+                script: document.getElementById('scriptSelect').value
+            };
+            console.log('Frontend: Sending stop command:', stopCommand);
+            try {
                 ws.send(JSON.stringify(stopCommand));
+            } catch (error) {
+                console.error('Frontend: Error sending stop command:', error);
             }
         });
     </script>

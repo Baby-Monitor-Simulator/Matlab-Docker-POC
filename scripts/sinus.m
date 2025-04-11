@@ -1,4 +1,4 @@
-function result = sinus(a, f, ts, tsp, te, server)
+function result = sinus(a, f, ts, tsp, te, server, should_stop)
     disp(['MATLAB: sinus called with params: a=' num2str(a) ', f=' num2str(f) ', ts=' num2str(ts) ', tsp=' num2str(tsp) ', te=' num2str(te)]);
     
     % Calculate number of points
@@ -12,38 +12,62 @@ function result = sinus(a, f, ts, tsp, te, server)
     chunk_size = 100;
     result = [];
     
-    for i = 1:chunk_size:num_points
-        % Check if server is still connected
-        if ~isempty(server) && ~server.Connected
-            disp('MATLAB: Server disconnected, stopping calculation');
+    % Continuous loop until server disconnects or should_stop is true
+    while true
+        % Check if we should stop
+        if should_stop || ~server.Connected
+            disp('MATLAB: Received stop signal or server disconnected, stopping calculation');
             break;
         end
         
-        % Calculate end index for this chunk
-        end_idx = min(i + chunk_size - 1, num_points);
+        % Reset result for this cycle
+        result = [];
         
-        % Calculate sine wave for this chunk
-        chunk_T = T(i:end_idx);
-        chunk_y = a * sin(2 * pi * f * chunk_T);
-        
-        % Add to result
-        result = [result, chunk_y];
-        
-        % Send this chunk to the server
-        if ~isempty(server) && server.Connected
-            try
-                write(server, jsonencode(chunk_y), "char");
-                disp(['MATLAB: Sent chunk of ' num2str(length(chunk_y)) ' points']);
-            catch e
-                disp(['MATLAB: Error sending chunk: ' e.message]);
+        for i = 1:chunk_size:num_points
+            % Check if we should stop
+            if should_stop || ~server.Connected
+                disp('MATLAB: Received stop signal or server disconnected, stopping calculation');
                 break;
             end
+            
+            % Calculate end index for this chunk
+            end_idx = min(i + chunk_size - 1, num_points);
+            
+            % Calculate sine wave for this chunk
+            chunk_T = T(i:end_idx);
+            chunk_y = a * sin(2 * pi * f * chunk_T);
+            
+            % Add to result
+            result = [result, chunk_y];
+            
+            % Send this chunk to the server
+            if server.Connected
+                try
+                    write(server, jsonencode(chunk_y), "char");
+                    disp(['MATLAB: Sent chunk of ' num2str(length(chunk_y)) ' points']);
+                catch e
+                    disp(['MATLAB: Error sending chunk: ' e.message]);
+                    break;
+                end
+            else
+                disp('MATLAB: Server disconnected, stopping calculation');
+                break;
+            end
+            
+            % Small pause to allow for data transmission
+            pause(0.01);
         end
         
-        % Small pause to allow for data transmission
-        pause(0.01);
+        if should_stop || ~server.Connected
+            break;
+        end
+        
+        disp(['MATLAB: First few values: ' num2str(result(1:min(5, length(result))))]);
+        disp('MATLAB: Cycle complete, starting next cycle');
+        
+        % Add a small delay between cycles
+        pause(0.1);
     end
     
-    disp(['MATLAB: First few values: ' num2str(result(1:min(5, length(result))))]);
-    disp('MATLAB: Calculation complete');
+    disp('MATLAB: Continuous calculation stopped');
 end
