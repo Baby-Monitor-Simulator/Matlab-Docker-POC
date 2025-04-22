@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MATLAB Data Viewer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .controls {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .param-group {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .param-group label {
+            min-width: 100px;
+        }
+        .param-group input {
+            width: 100px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .connected {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .disconnected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MATLAB Data Viewer</h1>
+        
+        <div class="controls">
+            <div class="param-group">
+                <label for="scriptSelect">Script:</label>
+                <select id="scriptSelect">
+                    <option value="sinus.m">sinus.m</option>
+                </select>
+            </div>
+            <div class="param-group">
+                <label for="amplitude">Amplitude:</label>
+                <input type="number" id="amplitude" value="5" step="0.1">
+            </div>
+            <div class="param-group">
+                <label for="frequency">Frequency (Hz):</label>
+                <input type="number" id="frequency" value="0.5" step="0.1">
+            </div>
+            <div class="param-group">
+                <label for="startTime">Start Time (s):</label>
+                <input type="number" id="startTime" value="0" step="0.1">
+            </div>
+            <div class="param-group">
+                <label for="timeStep">Time Step (s):</label>
+                <input type="number" id="timeStep" value="0.1" step="0.01">
+            </div>
+            <div class="param-group">
+                <label for="endTime">End Time (s):</label>
+                <input type="number" id="endTime" value="1" step="0.1">
+            </div>
+            <div class="param-group">
+                <button id="startBtn">Start</button>
+                <button id="updateBtn" disabled>Update</button>
+                <button id="stopBtn" disabled>Stop</button>
+            </div>
+            <div id="status" class="disconnected">Disconnected</div>
+        </div>
+
+        <canvas id="dataChart"></canvas>
+    </div>
+
+    <script>
+        // WebSocket connection
+        let ws;
+        let chart;
+        let isRunning = false;
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('dataChart').getContext('2d');
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'MATLAB Data',
+                    data: [],
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    pointRadius: 3,
+                    pointBackgroundColor: 'rgb(75, 192, 192)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Time (s)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Amplitude'
+                        }
+                    }
+                },
+                animation: {
+                    duration: 0
+                }
+            }
+        });
+
+        // WebSocket functions
+        function connect() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.hostname;
+            const port = window.location.port || '8765';
+            const wsUrl = `${protocol}//${host}:${port}/ws`;
+            
+            ws = new WebSocket(wsUrl);
+            
+            ws.onopen = function() {
+                console.log('Frontend: WebSocket connection opened');
+                document.getElementById('status').className = 'connected';
+                document.getElementById('status').textContent = 'Connected';
+            };
+
+            ws.onclose = function() {
+                console.log('Frontend: WebSocket connection closed');
+                document.getElementById('status').className = 'disconnected';
+                document.getElementById('status').textContent = 'Disconnected';
+                setTimeout(connect, 5000);
+            };
+
+            ws.onerror = function() {
+                console.log('Frontend: WebSocket error');
+                document.getElementById('status').className = 'disconnected';
+                document.getElementById('status').textContent = 'Error - Retrying...';
+            };
+
+            ws.onmessage = function(event) {
+                console.log('Frontend: Received message:', event.data);
+                const data = JSON.parse(event.data);
+                
+                if (data.status === 'started') {
+                    console.log('Frontend: Session started');
+                    isRunning = true;
+                    document.getElementById('startBtn').disabled = true;
+                    document.getElementById('stopBtn').disabled = false;
+                    document.getElementById('updateBtn').disabled = false;
+                    chart.data.datasets[0].data = [];
+                    chart.update();
+                }
+                
+                if (data.status === 'stopped') {
+                    console.log('Frontend: Session stopped');
+                    isRunning = false;
+                    document.getElementById('startBtn').disabled = false;
+                    document.getElementById('stopBtn').disabled = true;
+                    document.getElementById('updateBtn').disabled = true;
+                }
+                
+                if (Array.isArray(data)) {
+                    console.log('Frontend: Received data array of length:', data.length);
+                    // Create time points based on parameters
+                    const startTime = parseFloat(document.getElementById('startTime').value);
+                    const timeStep = parseFloat(document.getElementById('timeStep').value);
+                    const currentLength = chart.data.datasets[0].data.length;
+                    
+                    // Calculate the starting time for this chunk
+                    const chunkStartTime = startTime + (currentLength * timeStep);
+                    
+                    // Create points for this chunk
+                    const points = data.map((value, index) => ({
+                        x: chunkStartTime + (index * timeStep),
+                        y: value
+                    }));
+                    
+                    console.log('Frontend: First few points:', points.slice(0, 5));
+                    
+                    // Append new points to existing data
+                    chart.data.datasets[0].data = [...chart.data.datasets[0].data, ...points];
+                    chart.update();
+                }
+            };
+        }
+
+        // Start WebSocket connection
+        connect();
+
+        // Button event listeners
+        document.getElementById('startBtn').addEventListener('click', async function() {
+            if (!ws) {
+                console.error('Frontend: WebSocket not initialized');
+                return;
+            }
+            
+            if (ws.readyState !== WebSocket.OPEN) {
+                console.error('Frontend: WebSocket not connected, current state:', ws.readyState);
+                return;
+            }
+            
+            if (isRunning) {
+                console.error('Frontend: Session already running');
+                return;
+            }
+            
+            // First send stop command to ensure clean state
+            const stopCommand = { 
+                type: 'stop',
+                script: document.getElementById('scriptSelect').value
+            };
+            console.log('Frontend: Sending stop command to ensure clean state:', stopCommand);
+            try {
+                ws.send(JSON.stringify(stopCommand));
+                // Wait for 500ms to ensure stop is processed
+                await new Promise(resolve => setTimeout(resolve, 500));
+            } catch (error) {
+                console.error('Frontend: Error sending stop command:', error);
+            }
+            
+            // Then send start command
+            const params = {
+                type: 'start',
+                script: document.getElementById('scriptSelect').value,
+                params: [
+                    parseFloat(document.getElementById('amplitude').value),
+                    parseFloat(document.getElementById('frequency').value),
+                    parseFloat(document.getElementById('startTime').value),
+                    parseFloat(document.getElementById('timeStep').value),
+                    parseFloat(document.getElementById('endTime').value)
+                ]
+            };
+            console.log('Frontend: Sending start command:', params);
+            try {
+                ws.send(JSON.stringify(params));
+            } catch (error) {
+                console.error('Frontend: Error sending start command:', error);
+            }
+        });
+
+        document.getElementById('stopBtn').addEventListener('click', function() {
+            if (!ws) {
+                console.error('Frontend: WebSocket not initialized');
+                return;
+            }
+            
+            if (ws.readyState !== WebSocket.OPEN) {
+                console.error('Frontend: WebSocket not connected, current state:', ws.readyState);
+                return;
+            }
+            
+            if (!isRunning) {
+                console.error('Frontend: No active session to stop');
+                return;
+            }
+            
+            const stopCommand = { 
+                type: 'stop',
+                script: document.getElementById('scriptSelect').value
+            };
+            console.log('Frontend: Sending stop command:', stopCommand);
+            try {
+                ws.send(JSON.stringify(stopCommand));
+            } catch (error) {
+                console.error('Frontend: Error sending stop command:', error);
+            }
+        });
+
+        document.getElementById('updateBtn').addEventListener('click', function() {
+            if (!ws) {
+                console.error('Frontend: WebSocket not initialized');
+                return;
+            }
+            
+            if (ws.readyState !== WebSocket.OPEN) {
+                console.error('Frontend: WebSocket not connected, current state:', ws.readyState);
+                return;
+            }
+            
+            const updateCommand = {
+                type: 'update',
+                script: document.getElementById('scriptSelect').value,
+                params: [
+                    parseFloat(document.getElementById('amplitude').value),
+                    parseFloat(document.getElementById('frequency').value),
+                    parseFloat(document.getElementById('startTime').value),
+                    parseFloat(document.getElementById('timeStep').value),
+                    parseFloat(document.getElementById('endTime').value)
+                ]
+            };
+            console.log('Frontend: Sending update command:', updateCommand);
+            try {
+                ws.send(JSON.stringify(updateCommand));
+            } catch (error) {
+                console.error('Frontend: Error sending update command:', error);
+            }
+        });
+    </script>
+</body>
+</html> 

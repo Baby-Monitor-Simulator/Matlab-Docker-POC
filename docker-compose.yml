@@ -19,6 +19,8 @@ services:
     build: 
       context: ./controller
       dockerfile: Dockerfile
+    ports:
+      - "8765:8765"  # WebSocket port for test client
     volumes:
       - ./output:/app/output  # Add this volume for saving plots
       - ./config.json:/app/config.json  # Added config file mount
