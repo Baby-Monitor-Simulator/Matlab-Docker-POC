@@ -320,42 +320,51 @@ async def send_script_to_matlab(script_name, params, ws):
                     
                 try:
                     print(f"Controller: Received from MATLAB: {response}")
-                    # Parse the response
-                    data = json.loads(response)
-                    print(f"Controller: Parsed MATLAB response: {data}")
-                    
-                    # Check if it's a final result or incremental data
-                    if isinstance(data, dict) and 'error' in data:
-                        print(f"Controller: MATLAB error: {data['error']}")
-                        await ws.send_json({'error': data['error']})
-                        raise Exception(f"MATLAB error: {data['error']}")
-                    elif isinstance(data, dict) and 'status' in data:
-                        print(f"Controller: MATLAB status: {data['status']}")
+                    # First try to parse as numeric value
+                    try:
+                        data = float(response)
+                        print(f"Controller: Parsed MATLAB response as numeric: {data}")
+                        # Forward to WebSocket client
                         await ws.send_json(data)
-                        if data['status'] == 'stopped':
-                            print("Controller: Received stopped status from MATLAB")
-                            break
-                        elif data['status'] == 'completed':
-                            print("Controller: Received completed status from MATLAB")
-                            break
-                    else:
-                        # Handle incremental data
-                        if isinstance(data, list):
-                            print(f"Controller: Received {len(data)} data points from MATLAB")
-                            # Write data points to file
-                            with open('data_points.txt', 'a') as f:
-                                for point in data:
-                                    f.write(f"{point}\n")
+                        print("Controller: Data forwarded successfully")
+                        continue
+                    except ValueError:
+                        # If not numeric, try to parse as JSON
+                        try:
+                            data = json.loads(response)
+                            print(f"Controller: Parsed MATLAB response as JSON: {data}")
                             
-                            # Forward to WebSocket client
-                            print("Controller: Forwarding data to WebSocket client")
-                            try:
+                            # Check if it's a final result or incremental data
+                            if isinstance(data, dict) and 'error' in data:
+                                print(f"Controller: MATLAB error: {data['error']}")
+                                await ws.send_json({'error': data['error']})
+                                raise Exception(f"MATLAB error: {data['error']}")
+                            elif isinstance(data, dict) and 'status' in data:
+                                print(f"Controller: MATLAB status: {data['status']}")
+                                await ws.send_json(data)
+                                if data['status'] == 'stopped':
+                                    print("Controller: Received stopped status from MATLAB")
+                                    break
+                                elif data['status'] == 'completed':
+                                    print("Controller: Received completed status from MATLAB")
+                                    break
+                            elif isinstance(data, list):
+                                print(f"Controller: Received {len(data)} data points from MATLAB")
+                                # Write data points to file
+                                with open('data_points.txt', 'a') as f:
+                                    for point in data:
+                                        f.write(f"{point}\n")
+                                
+                                # Forward to WebSocket client
+                                print("Controller: Forwarding data to WebSocket client")
                                 await ws.send_json(data)
                                 print("Controller: Data forwarded successfully")
-                            except Exception as e:
-                                print(f"Controller: Error forwarding data to WebSocket: {e}")
-                except json.JSONDecodeError:
-                    print(f"Controller: Error decoding MATLAB response: {response}")
+                        except json.JSONDecodeError:
+                            print(f"Controller: Could not parse MATLAB response: {response}")
+                            continue
+                except Exception as e:
+                    print(f"Controller: Error in MATLAB communication: {e}")
+                    break
             except BlockingIOError:
                 # No data available, sleep briefly and continue
                 await asyncio.sleep(0.1)

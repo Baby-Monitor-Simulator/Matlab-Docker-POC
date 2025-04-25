@@ -77,28 +77,12 @@
             <div class="param-group">
                 <label for="scriptSelect">Script:</label>
                 <select id="scriptSelect">
-                    <option value="sinus.m">sinus.m</option>
+                    <option value="sinus.m">Sinus Wave (sinus.m)</option>
+                    <option value="parameterized_example.m">Vital Signs (parameterized_example.m)</option>
                 </select>
             </div>
-            <div class="param-group">
-                <label for="amplitude">Amplitude:</label>
-                <input type="number" id="amplitude" value="5" step="0.1">
-            </div>
-            <div class="param-group">
-                <label for="frequency">Frequency (Hz):</label>
-                <input type="number" id="frequency" value="0.5" step="0.1">
-            </div>
-            <div class="param-group">
-                <label for="startTime">Start Time (s):</label>
-                <input type="number" id="startTime" value="0" step="0.1">
-            </div>
-            <div class="param-group">
-                <label for="timeStep">Time Step (s):</label>
-                <input type="number" id="timeStep" value="0.1" step="0.01">
-            </div>
-            <div class="param-group">
-                <label for="endTime">End Time (s):</label>
-                <input type="number" id="endTime" value="1" step="0.1">
+            <div id="parametersContainer">
+                <!-- Parameters will be dynamically inserted here -->
             </div>
             <div class="param-group">
                 <button id="startBtn">Start</button>
@@ -112,6 +96,56 @@
     </div>
 
     <script>
+        // Script configurations
+        const scriptConfigs = {
+            'sinus.m': {
+                name: 'Sinus Wave',
+                params: [
+                    { name: 'amplitude', label: 'Amplitude', value: 5, step: 0.1 },
+                    { name: 'frequency', label: 'Frequency (Hz)', value: 0.5, step: 0.1 },
+                    { name: 'startTime', label: 'Start Time (s)', value: 0, step: 0.1 },
+                    { name: 'timeStep', label: 'Time Step (s)', value: 0.1, step: 0.01 },
+                    { name: 'endTime', label: 'End Time (s)', value: 1, step: 0.1 }
+                ]
+            },
+            'parameterized_example.m': {
+                name: 'Vital Signs',
+                params: [
+                    { name: 'heartRate', label: 'Heart Rate (bpm)', value: 120, step: 1 },
+                    { name: 'oxygenLevel', label: 'Oxygen Level (%)', value: 98, step: 1 },
+                    { name: 'numCycles', label: 'Number of Cycles', value: 100, step: 1 }
+                ]
+            }
+        };
+
+        // Function to create parameter inputs
+        function createParameterInputs(scriptName) {
+            const config = scriptConfigs[scriptName];
+            const container = document.getElementById('parametersContainer');
+            container.innerHTML = ''; // Clear existing parameters
+
+            config.params.forEach(param => {
+                const div = document.createElement('div');
+                div.className = 'param-group';
+                div.innerHTML = `
+                    <label for="${param.name}">${param.label}:</label>
+                    <input type="number" 
+                           id="${param.name}" 
+                           value="${param.value}" 
+                           step="${param.step}">
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Initialize parameters for default script
+        createParameterInputs(document.getElementById('scriptSelect').value);
+
+        // Handle script selection change
+        document.getElementById('scriptSelect').addEventListener('change', function() {
+            createParameterInputs(this.value);
+        });
+
         // WebSocket connection
         let ws;
         let chart;
@@ -147,7 +181,7 @@
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Amplitude'
+                            text: 'Value'
                         }
                     }
                 },
@@ -201,32 +235,57 @@
                 
                 if (data.status === 'stopped') {
                     console.log('Frontend: Session stopped');
-                    isRunning = false;
-                    document.getElementById('startBtn').disabled = false;
-                    document.getElementById('stopBtn').disabled = true;
-                    document.getElementById('updateBtn').disabled = true;
+                    // Only update UI if we're actually running
+                    if (isRunning) {
+                        isRunning = false;
+                        document.getElementById('startBtn').disabled = false;
+                        document.getElementById('stopBtn').disabled = true;
+                        document.getElementById('updateBtn').disabled = true;
+                    }
                 }
                 
-                if (Array.isArray(data)) {
-                    console.log('Frontend: Received data array of length:', data.length);
-                    // Create time points based on parameters
-                    const startTime = parseFloat(document.getElementById('startTime').value);
-                    const timeStep = parseFloat(document.getElementById('timeStep').value);
-                    const currentLength = chart.data.datasets[0].data.length;
+                // Handle numeric data (both arrays and single values)
+                if (typeof data === 'number' || Array.isArray(data)) {
+                    console.log('Frontend: Received numeric data:', data);
                     
-                    // Calculate the starting time for this chunk
-                    const chunkStartTime = startTime + (currentLength * timeStep);
+                    // Get the current script to determine how to handle the data
+                    const scriptName = document.getElementById('scriptSelect').value;
+                    const isParameterized = scriptName === 'parameterized_example.m';
                     
-                    // Create points for this chunk
-                    const points = data.map((value, index) => ({
-                        x: chunkStartTime + (index * timeStep),
-                        y: value
-                    }));
+                    if (isParameterized) {
+                        // For parameterized_example.m, we receive single values
+                        const currentLength = chart.data.datasets[0].data.length;
+                        const pointTime = currentLength;  // Use index as time for simplicity
+                        
+                        // Add the single point
+                        chart.data.datasets[0].data.push({
+                            x: pointTime,
+                            y: data
+                        });
+                        
+                        console.log('Frontend: Added single point at time:', pointTime);
+                    } else {
+                        // For sinus.m, we receive arrays
+                        const startTime = parseFloat(document.getElementById('startTime')?.value || 0);
+                        const timeStep = parseFloat(document.getElementById('timeStep')?.value || 0.1);
+                        const currentLength = chart.data.datasets[0].data.length;
+                        
+                        // Calculate the starting time for this chunk
+                        const chunkStartTime = startTime + (currentLength * timeStep);
+                        
+                        // Create points for this chunk
+                        const points = data.map((value, index) => ({
+                            x: chunkStartTime + (index * timeStep),
+                            y: value
+                        }));
+                        
+                        console.log('Frontend: First few points:', points.slice(0, 5));
+                        
+                        // Append new points to existing data
+                        chart.data.datasets[0].data = [...chart.data.datasets[0].data, ...points];
+                    }
                     
-                    console.log('Frontend: First few points:', points.slice(0, 5));
-                    
-                    // Append new points to existing data
-                    chart.data.datasets[0].data = [...chart.data.datasets[0].data, ...points];
+                    // Update the chart
                     chart.update();
                 }
             };
@@ -257,36 +316,39 @@
                 type: 'stop',
                 script: document.getElementById('scriptSelect').value
             };
-            console.log('Frontend: Sending stop command to ensure clean state:', stopCommand);
-            try {
-                ws.send(JSON.stringify(stopCommand));
-                // Wait for 500ms to ensure stop is processed
-                await new Promise(resolve => setTimeout(resolve, 500));
-            } catch (error) {
-                console.error('Frontend: Error sending stop command:', error);
-            }
+            // console.log('Frontend: Sending stop command to ensure clean state:', stopCommand);
+            // try {
+            //     ws.send(JSON.stringify(stopCommand));
+            //     // Wait for 500ms to ensure stop is processed
+            //     await new Promise(resolve => setTimeout(resolve, 500));
+            // } catch (error) {
+            //     console.error('Frontend: Error sending stop command:', error);
+            // }
+            
+            // Get current script configuration
+            const scriptName = document.getElementById('scriptSelect').value;
+            const config = scriptConfigs[scriptName];
+            
+            // Collect parameter values
+            const params = config.params.map(param => 
+                parseFloat(document.getElementById(param.name).value)
+            );
             
             // Then send start command
-            const params = {
+            const startCommand = {
                 type: 'start',
-                script: document.getElementById('scriptSelect').value,
-                params: [
-                    parseFloat(document.getElementById('amplitude').value),
-                    parseFloat(document.getElementById('frequency').value),
-                    parseFloat(document.getElementById('startTime').value),
-                    parseFloat(document.getElementById('timeStep').value),
-                    parseFloat(document.getElementById('endTime').value)
-                ]
+                script: scriptName,
+                params: params
             };
-            console.log('Frontend: Sending start command:', params);
+            console.log('Frontend: Sending start command:', startCommand);
             try {
-                ws.send(JSON.stringify(params));
+                ws.send(JSON.stringify(startCommand));
             } catch (error) {
                 console.error('Frontend: Error sending start command:', error);
             }
         });
 
-        document.getElementById('stopBtn').addEventListener('click', function() {
+        document.getElementById('stopBtn').addEventListener('click', async function() {
             if (!ws) {
                 console.error('Frontend: WebSocket not initialized');
                 return;
@@ -309,6 +371,11 @@
             console.log('Frontend: Sending stop command:', stopCommand);
             try {
                 ws.send(JSON.stringify(stopCommand));
+                // Shouldn't update UI here - wait for the stopped status message
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('stopBtn').disabled = true;
+                document.getElementById('updateBtn').disabled = true;
+                // The UI will be updated in the onmessage handler when we receive the acknowledgment
             } catch (error) {
                 console.error('Frontend: Error sending stop command:', error);
             }
@@ -325,16 +392,19 @@
                 return;
             }
             
+            // Get current script configuration
+            const scriptName = document.getElementById('scriptSelect').value;
+            const config = scriptConfigs[scriptName];
+            
+            // Collect parameter values
+            const params = config.params.map(param => 
+                parseFloat(document.getElementById(param.name).value)
+            );
+            
             const updateCommand = {
                 type: 'update',
-                script: document.getElementById('scriptSelect').value,
-                params: [
-                    parseFloat(document.getElementById('amplitude').value),
-                    parseFloat(document.getElementById('frequency').value),
-                    parseFloat(document.getElementById('startTime').value),
-                    parseFloat(document.getElementById('timeStep').value),
-                    parseFloat(document.getElementById('endTime').value)
-                ]
+                script: scriptName,
+                params: params
             };
             console.log('Frontend: Sending update command:', updateCommand);
             try {

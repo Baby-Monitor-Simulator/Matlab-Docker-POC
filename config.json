@@ -1,4 +1,4 @@
 {
-    "script_name": "sinus.m",
-    "params": [13, 1.3, 0, 0.1, 10]
+    "script_name": "parameterized_example.m",
+    "params": [130, 95, 10]
 } 
