@@ -348,6 +348,15 @@ async def send_script_to_matlab(script_name, params, ws):
                                 elif data['status'] == 'completed':
                                     print("Controller: Received completed status from MATLAB")
                                     break
+                            elif isinstance(data, dict) and 'name' in data and 'value' in data:
+                                # Handle named variable data
+                                print(f"Controller: Received named variable: {data['name']} = {data['value']}")
+                                await ws.send_json(data)
+                            elif isinstance(data, dict):
+                                # Handle dictionary data with direct key-value pairs
+                                print(f"Controller: Received dictionary data: {data}")
+                                await ws.send_json(data)
+                                print("Controller: Dictionary data forwarded successfully")
                             elif isinstance(data, list):
                                 print(f"Controller: Received {len(data)} data points from MATLAB")
                                 # Write data points to file

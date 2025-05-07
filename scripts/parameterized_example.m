@@ -1,4 +1,4 @@
-function result = parameterized_example(heart_rate, oxygen_level, num_cycles, server, should_stop)
+function result = parameterized_example(heart_rate, oxygen_level, num_cycles, systolic_bp, diastolic_bp, server, should_stop)
     % Get the directory where this script is located
     [scriptDir, ~, ~] = fileparts(mfilename('fullpath'));
     
@@ -48,8 +48,27 @@ function result = parameterized_example(heart_rate, oxygen_level, num_cycles, se
         current_oxygen = oxygen_level + randn(1) * 2;  % Add some random variation
         current_oxygen = max(0, min(100, current_oxygen));  % Keep within valid range
         
-        % Send the oxygen level directly as a numeric value
-        send_message(server, current_oxygen, 'vital signs data');
+        % Calculate heart rate (simplified)
+        current_heart_rate = heart_rate + randn(1) * 5;  % Add some random variation
+        current_heart_rate = max(40, min(200, current_heart_rate));  % Keep within valid range (40-200 bpm)
+        
+        % Calculate blood pressure (simplified)
+        % Normal systolic range: 90-140 mmHg, diastolic range: 60-90 mmHg
+        current_systolic = systolic_bp + randn(1) * 10;  % Base value with variation
+        current_systolic = max(90, min(140, current_systolic));  % Keep within valid range
+        
+        current_diastolic = diastolic_bp + randn(1) * 5;  % Base value with variation
+        current_diastolic = max(60, min(90, current_diastolic));  % Keep within valid range
+        
+        % Send all vital signs in a single message
+        vital_signs = struct('oxygen_level', current_oxygen, ...
+                           'heart_rate', current_heart_rate, ...
+                           'systolic_bp', current_systolic, ...
+                           'diastolic_bp', current_diastolic);
+        send_message(server, vital_signs, 'vital signs data');
+        
+        % Force flush the message to ensure it's sent immediately
+        flush(server);
         
         % Check for messages and process commands
         [should_stop, new_params] = check_messages(server);

@@ -88,6 +88,7 @@
                 <button id="startBtn">Start</button>
                 <button id="updateBtn" disabled>Update</button>
                 <button id="stopBtn" disabled>Stop</button>
+                <button id="clearLinesBtn">Clear Lines</button>
             </div>
             <div id="status" class="disconnected">Disconnected</div>
         </div>
@@ -113,10 +114,98 @@
                 params: [
                     { name: 'heartRate', label: 'Heart Rate (bpm)', value: 120, step: 1 },
                     { name: 'oxygenLevel', label: 'Oxygen Level (%)', value: 98, step: 1 },
-                    { name: 'numCycles', label: 'Number of Cycles', value: 100, step: 1 }
+                    { name: 'numCycles', label: 'Number of Cycles', value: 100, step: 1 },
+                    { name: 'systolicBP', label: 'Systolic BP (mmHg)', value: 120, step: 1 },
+                    { name: 'diastolicBP', label: 'Diastolic BP (mmHg)', value: 80, step: 1 }
                 ]
             }
         };
+
+        // Color palette for multiple lines
+        const colors = [
+            'rgb(75, 192, 192)',  // Teal
+            'rgb(255, 99, 132)',  // Red
+            'rgb(54, 162, 235)',  // Blue
+            'rgb(255, 206, 86)',  // Yellow
+            'rgb(153, 102, 255)', // Purple
+            'rgb(255, 159, 64)'   // Orange
+        ];
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('dataChart').getContext('2d');
+        let chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: []
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Time (s)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Value'
+                        }
+                    }
+                },
+                animation: {
+                    duration: 0
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // Function to get or create dataset for a variable
+        function getDatasetForVariable(variableName) {
+            console.log('Frontend: Looking for dataset:', variableName);
+            // Check if dataset already exists
+            const existingDataset = chart.data.datasets.find(ds => ds.label === variableName);
+            if (existingDataset) {
+                console.log('Frontend: Found existing dataset');
+                return existingDataset;
+            }
+
+            console.log('Frontend: Creating new dataset for:', variableName);
+            // Create new dataset
+            const color = colors[chart.data.datasets.length % colors.length];
+            const newDataset = {
+                label: variableName,
+                data: [],
+                borderColor: color,
+                backgroundColor: color,
+                tension: 0.1,
+                pointRadius: 3,
+                pointBackgroundColor: color
+            };
+
+            chart.data.datasets.push(newDataset);
+            console.log('Frontend: Added new dataset:', newDataset);
+            return newDataset;
+        }
+
+        // Function to clear all lines
+        function clearLines() {
+            chart.data.datasets = [];
+            chart.update();
+        }
+
+        // Add event listener for clear lines button
+        document.getElementById('clearLinesBtn').addEventListener('click', clearLines);
 
         // Function to create parameter inputs
         function createParameterInputs(scriptName) {
@@ -148,48 +237,7 @@
 
         // WebSocket connection
         let ws;
-        let chart;
         let isRunning = false;
-
-        // Initialize Chart.js
-        const ctx = document.getElementById('dataChart').getContext('2d');
-        chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'MATLAB Data',
-                    data: [],
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1,
-                    pointRadius: 3,
-                    pointBackgroundColor: 'rgb(75, 192, 192)'
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        title: {
-                            display: true,
-                            text: 'Time (s)'
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Value'
-                        }
-                    }
-                },
-                animation: {
-                    duration: 0
-                }
-            }
-        });
 
         // WebSocket functions
         function connect() {
@@ -223,69 +271,76 @@
                 console.log('Frontend: Received message:', event.data);
                 const data = JSON.parse(event.data);
                 
-                if (data.status === 'started') {
-                    console.log('Frontend: Session started');
-                    isRunning = true;
-                    document.getElementById('startBtn').disabled = true;
-                    document.getElementById('stopBtn').disabled = false;
-                    document.getElementById('updateBtn').disabled = false;
-                    chart.data.datasets[0].data = [];
-                    chart.update();
-                }
-                
-                if (data.status === 'stopped') {
-                    console.log('Frontend: Session stopped');
-                    // Only update UI if we're actually running
-                    if (isRunning) {
-                        isRunning = false;
-                        document.getElementById('startBtn').disabled = false;
-                        document.getElementById('stopBtn').disabled = true;
-                        document.getElementById('updateBtn').disabled = true;
+                // Skip status messages
+                if (data.status) {
+                    console.log('Frontend: Status message received:', data.status);
+                    if (data.status === 'started') {
+                        console.log('Frontend: Session started');
+                        isRunning = true;
+                        document.getElementById('startBtn').disabled = true;
+                        document.getElementById('stopBtn').disabled = false;
+                        document.getElementById('updateBtn').disabled = false;
+                        clearLines();
+                    } else if (data.status === 'stopped') {
+                        console.log('Frontend: Session stopped');
+                        if (isRunning) {
+                            isRunning = false;
+                            document.getElementById('startBtn').disabled = false;
+                            document.getElementById('stopBtn').disabled = true;
+                            document.getElementById('updateBtn').disabled = true;
+                        }
                     }
+                    return;  // Skip plotting for status messages
                 }
                 
-                // Handle numeric data (both arrays and single values)
-                if (typeof data === 'number' || Array.isArray(data)) {
-                    console.log('Frontend: Received numeric data:', data);
-                    
-                    // Get the current script to determine how to handle the data
-                    const scriptName = document.getElementById('scriptSelect').value;
-                    const isParameterized = scriptName === 'parameterized_example.m';
-                    
-                    if (isParameterized) {
-                        // For parameterized_example.m, we receive single values
-                        const currentLength = chart.data.datasets[0].data.length;
-                        const pointTime = currentLength;  // Use index as time for simplicity
+                // Handle named variable data
+                if (typeof data === 'object' && !Array.isArray(data)) {
+                    // Process each key-value pair in the object
+                    Object.entries(data).forEach(([variableName, value]) => {
+                        console.log('Frontend: Processing variable:', variableName, ':', value);
                         
-                        // Add the single point
-                        chart.data.datasets[0].data.push({
-                            x: pointTime,
-                            y: data
-                        });
+                        // Get or create dataset for this variable
+                        const dataset = getDatasetForVariable(variableName);
+                        console.log('Frontend: Using dataset:', dataset.label);
                         
-                        console.log('Frontend: Added single point at time:', pointTime);
-                    } else {
-                        // For sinus.m, we receive arrays
-                        const startTime = parseFloat(document.getElementById('startTime')?.value || 0);
-                        const timeStep = parseFloat(document.getElementById('timeStep')?.value || 0.1);
-                        const currentLength = chart.data.datasets[0].data.length;
-                        
-                        // Calculate the starting time for this chunk
-                        const chunkStartTime = startTime + (currentLength * timeStep);
-                        
-                        // Create points for this chunk
-                        const points = data.map((value, index) => ({
-                            x: chunkStartTime + (index * timeStep),
+                        // Add the data point
+                        const currentLength = dataset.data.length;
+                        const newPoint = {
+                            x: currentLength,
                             y: value
-                        }));
+                        };
+                        console.log('Frontend: Adding point:', newPoint);
                         
-                        console.log('Frontend: First few points:', points.slice(0, 5));
-                        
-                        // Append new points to existing data
-                        chart.data.datasets[0].data = [...chart.data.datasets[0].data, ...points];
-                    }
+                        dataset.data.push(newPoint);
+                        console.log('Frontend: Dataset now has', dataset.data.length, 'points');
+                    });
                     
-                    // Update the chart
+                    chart.update();
+                    console.log('Frontend: Chart updated');
+                }
+                // Handle array data (for sinus.m)
+                else if (Array.isArray(data)) {
+                    console.log('Frontend: Received array data of length:', data.length);
+                    
+                    // Get or create dataset for the default line
+                    const dataset = getDatasetForVariable('Data');
+                    
+                    const startTime = parseFloat(document.getElementById('startTime')?.value || 0);
+                    const timeStep = parseFloat(document.getElementById('timeStep')?.value || 0.1);
+                    const currentLength = dataset.data.length;
+                    
+                    // Calculate the starting time for this chunk
+                    const chunkStartTime = startTime + (currentLength * timeStep);
+                    
+                    // Create points for this chunk
+                    const points = data.map((value, index) => ({
+                        x: chunkStartTime + (index * timeStep),
+                        y: value
+                    }));
+                    
+                    // Append new points to existing data
+                    dataset.data = [...dataset.data, ...points];
+                    
                     chart.update();
                 }
             };

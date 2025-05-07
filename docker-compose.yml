@@ -4,6 +4,8 @@ services:
   matlab_service:
     container_name: matlab-scripts
     image: "matlab-login"
+    environment:
+      - PYTHONUNBUFFERED=1
     ports:
      - "8888:8888"
      - "12345:12345"  # Added TCP server port
@@ -19,6 +21,8 @@ services:
     build: 
       context: ./controller
       dockerfile: Dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
     ports:
       - "8765:8765"  # WebSocket port for test client
     volumes:
