@@ -154,7 +154,7 @@ It is only used by main.py for default values.
    {
        "type": "start",
        "script": "parameterized_example.m",
-       "params": [1, -2, 1]
+       "params": [130, 95, 10, 120, 80]
    }
    ```
 
@@ -164,7 +164,7 @@ Send an update command via WebSocket:
 ```json
 {
     "type": "update",
-    "params": [2, -4, 2]
+    "params": [100, 95, 10, 150, 80]
 }
 ```
 
@@ -192,6 +192,131 @@ Send a stop command via WebSocket:
        % Check should_stop for termination
    end
    ```
+
+## Implementing a Parameterized Script
+
+Here's a step-by-step guide to implement a parameterized script like `parameterized_example.m`:
+
+1. **Create the Function Structure**:
+   ```matlab
+   function result = my_parameterized_script(param1, param2, param3, server, should_stop)
+       % Initialize result structure
+       result = struct();
+       
+       try
+           % Your implementation here
+           
+       catch ME
+           % Error handling
+           result.success = false;
+           result.error = ME.message;
+           server.write(jsonencode(result));
+       end
+   end
+   ```
+
+2. **Add Data Generation**:
+   ```matlab
+   % Inside the try block
+   % Generate x values
+   x = linspace(-10, 10, 100);
+   
+   % Calculate y values using parameters
+   y = param1 * x.^2 + param2 * x + param3;
+   ```
+
+3. **Create Plot Data Structure**:
+   ```matlab
+   % Create the data structure for plotting
+   plot_data = struct();
+   plot_data.x = x;
+   plot_data.y = y;
+   ```
+
+4. **Send Data to Server**:
+   ```matlab
+   % Send the data to the web interface
+   server.write(jsonencode(plot_data));
+   ```
+
+5. **Store Results**:
+   ```matlab
+   % Store the results in the result structure
+   result.success = true;
+   result.data = plot_data;
+   ```
+
+6. **Complete Example**:
+   ```matlab
+   function result = my_parameterized_script(param1, param2, param3, server, should_stop)
+       % Initialize result structure
+       result = struct();
+       
+       try
+           % Generate x values
+           x = linspace(-10, 10, 100);
+           
+           % Calculate y values using parameters
+           y = param1 * x.^2 + param2 * x + param3;
+           
+           % Create plot data structure
+           plot_data = struct();
+           plot_data.x = x;
+           plot_data.y = y;
+           
+           % Send data to server
+           server.write(jsonencode(plot_data));
+           
+           % Store results
+           result.success = true;
+           result.data = plot_data;
+           
+       catch ME
+           % Error handling
+           result.success = false;
+           result.error = ME.message;
+           server.write(jsonencode(result));
+       end
+   end
+   ```
+
+7. **Adding Your Script to the Frontend**:
+   - Open `output/index.html` in your code editor
+   - Locate the script configuration object (look for the script definitions)
+   - Add your script configuration:
+   ```javascript
+   'my_parameterized_script.m': {
+       name: 'My Script Name',
+       params: [
+           { name: 'param1', label: 'Parameter 1 Label', value: 1, step: 0.1 },
+           { name: 'param2', label: 'Parameter 2 Label', value: -2, step: 0.1 },
+           { name: 'param3', label: 'Parameter 3 Label', value: 1, step: 0.1 }
+       ]
+   }
+   ```
+
+8. **Testing Your Implementation**:
+   1. Save the script in the `scripts/` directory
+   2. Make sure your script is added in the frontend (step 7)
+   3. Start the system with `docker-compose up`
+   4. Access the web interface at `http://localhost:8765/index.html`
+   5. Select your script from the dropdown
+   6. Test with different parameter values
+   7. Verify the plot updates in real-time
+
+   8. The configuration includes:
+      - `name`: Display name for your script in the dropdown
+      - `params`: Array of parameter configurations, each with:
+         - `name`: Parameter identifier (used in the backend)
+         - `value`: Default value for the parameter
+
+9. **Common Modifications**:
+   - Change the x-axis range by modifying `linspace` parameters
+   - Add more parameters for complex calculations
+   - Implement different mathematical functions
+   - Add multiple data series to the plot
+   - Include additional metadata in the plot_data structure
+
 
 ## Troubleshooting
 

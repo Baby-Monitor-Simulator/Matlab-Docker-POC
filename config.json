@@ -1,4 +1,4 @@
 {
     "script_name": "parameterized_example.m",
-    "params": [130, 95, 10]
+    "params": [130, 95, 10, 120, 80]
 } 
