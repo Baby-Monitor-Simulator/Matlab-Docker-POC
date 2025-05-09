@@ -366,5 +366,4 @@ Here's a step-by-step guide to implement a parameterized script like `parameteri
 - The MATLAB server uses port 12345 for TCP communication
 - The Python controller uses port 8765 for WebSocket communication
 - All data is sent in JSON format
-- Plots are saved in the `output/` directory
 - The system supports real-time parameter updates
