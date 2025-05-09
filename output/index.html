@@ -79,6 +79,7 @@
                 <select id="scriptSelect">
                     <option value="sinus.m">Sinus Wave (sinus.m)</option>
                     <option value="parameterized_example.m">Vital Signs (parameterized_example.m)</option>
+                    <option value="FMPmodel.m">FMPmodel (FMPmodel.m)</option>
                 </select>
             </div>
             <div id="parametersContainer">
@@ -117,6 +118,23 @@
                     { name: 'numCycles', label: 'Number of Cycles', value: 100, step: 1 },
                     { name: 'systolicBP', label: 'Systolic BP (mmHg)', value: 120, step: 1 },
                     { name: 'diastolicBP', label: 'Diastolic BP (mmHg)', value: 80, step: 1 }
+                ]
+            },
+            'FMPmodel.m': {
+                name: 'FMPmodel',
+                params: [
+                    { name: 'vMother', label: 'vMother', value: 1, step: 1 },
+                    { name: 'vUterus', label: 'vUterus', value: 1, step: 1 },
+                    { name: 'vFoetus', label: 'vFoetus', value: 1, step: 1 },
+                    { name: 'vUmbilical', label: 'vUmbilical', value: 2, step: 1 },
+                    { name: 'vBrain', label: 'vBrain', value: 1, step: 1 },
+                    { name: 'vCAVmodel', label: 'vCAVmodel', value: 2, step: 1 },
+                    { name: 'vScen', label: 'vScen', value: 2, step: 1 },
+                    { name: 'vHES', label: 'vHES', value: 0, step: 1 },
+                    { name: 'vPersen', label: 'vPersen', value: 0, step: 1 },
+                    { name: 'vDuty', label: 'vDuty', value: 0, step: 1 },
+                    { name: 'vNCycleMax', label: 'vNCycleMax', value: 300, step: 1 },
+                    { name: 'vLamb', label: 'vLamb', value: 0, step: 1 }
                 ]
             }
         };

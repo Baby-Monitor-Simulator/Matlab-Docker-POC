@@ -15,6 +15,14 @@ else
     error('Utils directory not found at: %s', utilsPath);
 end
 
+% Add production directory to path
+prodPath = fullfile(scriptDir, 'production');
+if exist(prodPath, 'dir')
+    addpath(prodPath);
+else
+    error('Production directory not found at: %s', prodPath);
+end
+
 % Additional verification
 disp('Checking for TCP/IP functions...');
 tcpserverPath = which('tcpserver');
