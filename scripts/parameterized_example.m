@@ -19,6 +19,8 @@ function result = parameterized_example(heart_rate, oxygen_level, num_cycles, sy
     %       heart_rate - beats per minute
     %       oxygen_level - blood oxygen saturation percentage
     %       num_cycles - number of heartbeat cycles to simulate
+    %       systolic_bp - systolic blood pressure (mmHg)
+    %       diastolic_bp - diastolic blood pressure (mmHg)
     %       server - TCP/IP server connection
     %       should_stop - boolean to indicate if calculation should stop
     %
@@ -35,6 +37,16 @@ function result = parameterized_example(heart_rate, oxygen_level, num_cycles, sy
     
     % Main simulation loop for each heartbeat cycle
     for cycle = 1:num_cycles
+        % Check for messages and process commands
+        [should_stop, new_params] = check_messages(server);
+        
+        % If we received new parameters, send acknowledgment and return them
+        if ~isempty(new_params)
+            send_message(server, struct('status', 'updated'), 'update acknowledgment');
+            result = new_params;
+            return;
+        end
+        
         % Check if we should stop
         if should_stop || ~server.Connected
             disp('MATLAB: Received stop signal or server disconnected');
@@ -67,26 +79,6 @@ function result = parameterized_example(heart_rate, oxygen_level, num_cycles, sy
                            'diastolic_bp', current_diastolic);
         send_message(server, vital_signs, 'vital signs data');
         
-        % Force flush the message to ensure it's sent immediately
-        flush(server);
-        
-        % Check for messages and process commands
-        [should_stop, new_params] = check_messages(server);
-        
-        % If we received new parameters, send acknowledgment and return them
-        if ~isempty(new_params)
-            send_message(server, struct('status', 'updated'), 'update acknowledgment');
-            result = new_params;
-            return;
-        end
-        
-        % Check if we should stop
-        if should_stop || ~server.Connected
-            disp('MATLAB: Received stop signal or server disconnected');
-            break;
-        end
-        
-        %result = current_oxygen;
         % Wait for next cycle (simulating real-time)
         pause(cycle_time);
     end

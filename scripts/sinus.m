@@ -10,6 +10,7 @@ function result = sinus(a, f, ts, tsp, te, server, should_stop)
     if ~contains(path, utilsDir)
         addpath(utilsDir);
     end
+
     
     % SINUS Generate sine wave data
     %   This function generates a sine wave with specified parameters
@@ -42,33 +43,25 @@ function result = sinus(a, f, ts, tsp, te, server, should_stop)
     
     % Continuous loop until server disconnects or should_stop is true
     while true
-        % Check if we should stop
-        disp(should_stop);
-        disp(server.Connected);
-        if should_stop || ~server.Connected
-            disp('MATLAB: Received stop signal or server disconnected, stopping calculation');
-            % Send acknowledgment if it's a stop command
-            if should_stop && server.Connected
-                write(server, jsonencode(struct('status', 'stopped', 'reason', 'command')), "char");
-                disp('MATLAB: Sent stop acknowledgment (command)');
-            end
-            break;
-        end
-        disp('After should stop check');
-        
         % Check for messages and process commands
         [should_stop, new_params] = check_messages(server);
-        disp('After check_messages');
+        
         % If we received new parameters, send acknowledgment and return them
         if ~isempty(new_params)
             send_message(server, struct('status', 'updated'), 'update acknowledgment');
             result = new_params;
             return;
         end
-        disp('After new_params check');
+        
+        % Check if we should stop
+        if should_stop || ~server.Connected
+            disp('MATLAB: Received stop signal or server disconnected, stopping calculation');
+            break;
+        end
+        
         % Reset result for this cycle
         result = [];
-        disp('After result reset');
+        
         for i = 1:chunk_size:num_points
             % Check if we should stop
             if should_stop || ~server.Connected
@@ -92,12 +85,11 @@ function result = sinus(a, f, ts, tsp, te, server, should_stop)
             % Add a small pause between chunks to allow for message processing
             pause(0.05);
         end
-        disp('After chunk loop');
+        
         if should_stop || ~server.Connected
-            disp('Last should stop check');
             break;
         end
-        disp('After last should stop check');
+        
         disp(['MATLAB: First few values: ' num2str(result(1:min(5, length(result))))]);
         disp('MATLAB: Cycle complete, starting next cycle');
         

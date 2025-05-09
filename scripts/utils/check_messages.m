@@ -1,6 +1,6 @@
-function [should_stop, new_params] = check_messages(server)
+function [should_stop, new_params, script_info] = check_messages(server)
     % CHECK_MESSAGES Check for incoming messages and process commands
-    %   [should_stop, new_params] = check_messages(server) checks for incoming
+    %   [should_stop, new_params, script_info] = check_messages(server) checks for incoming
     %   messages on the server connection and processes any commands.
     %
     %   Input:
@@ -10,9 +10,12 @@ function [should_stop, new_params] = check_messages(server)
     %       should_stop - boolean indicating if processing should stop
     %       new_params - struct containing new parameters if an update command
     %                   was received, empty otherwise
+    %       script_info - struct containing script and params for start command,
+    %                    empty otherwise
     
     should_stop = false;
     new_params = [];
+    script_info = [];
     
     % Check if there are any pending commands
     if server.NumBytesAvailable > 0
@@ -35,6 +38,19 @@ function [should_stop, new_params] = check_messages(server)
                         if server.Connected
                             write(server, jsonencode(struct('status', 'stopped', 'reason', 'command')), "char");
                             disp('MATLAB: Sent stop acknowledgment (command)');
+                        end
+                        
+                    case 'start'
+                        disp('MATLAB: Start command received');
+                        if isfield(command, 'script')
+                            script_info = struct('script', command.script, 'params', command.params);
+                            % Send acknowledgment
+                            if server.Connected
+                                write(server, jsonencode(struct('status', 'started')), "char");
+                                disp('MATLAB: Sent start acknowledgment');
+                            end
+                        else
+                            disp('MATLAB: Start command missing script field');
                         end
                         
                     otherwise
