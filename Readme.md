@@ -52,7 +52,7 @@ This project sets up a MATLAB TCP server that can execute MATLAB scripts and com
    ```
 
 4. **Access the Web Interface**:
-   - Open your browser and navigate to `http://localhost:8765`
+   - Open your browser and navigate to `http://localhost:8765/index.html`
    - The web interface will automatically connect to the WebSocket server
 
 ## Web Interface
@@ -78,7 +78,7 @@ The project includes a web-based interface for real-time visualization and contr
 ### Usage
 
 1. **Accessing the Interface**:
-   - After starting the system, open `http://localhost:8765` in your browser
+   - After starting the system, open `http://localhost:8765/index.html` in your browser
    - The interface will automatically connect to the WebSocket server
 
 2. **Controlling Scripts**:
@@ -143,11 +143,7 @@ It is only used by main.py for default values.
 
 ### Starting a Script
 
-1. **Using config.json**:
-   - Edit `config.json` with your desired script and parameters
-   - Start the system with `docker-compose up`
-
-2. **Using WebSocket API**:
+   **Using WebSocket API**:
    - Connect to `ws://localhost:8765/ws`
    - Send a start command:
    ```json
