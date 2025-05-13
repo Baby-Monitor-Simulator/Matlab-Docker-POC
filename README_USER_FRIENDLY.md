@@ -10,14 +10,28 @@ This guide will help you set up and run the Fetal-Maternal Physiology Model, eve
 4. Follow the installation wizard's instructions
 5. Restart your computer when prompted
 
-## Step 2: Download the Project
+## Step 2: Set Up MATLAB Docker Image
+
+1. Open Command Prompt (search for "cmd" in the Start menu)
+2. Run the following command to start MATLAB:
+   ```
+   docker run -it --rm mathworks/matlab:r2024b matlab -n matlab-container -licmode onlinelicensing
+   ```
+3. When prompted, log in with your MATLAB account credentials
+4. After logging in, open a new Command Prompt window (cmd like step 1) and run:
+   ```
+   docker commit matlab-container matlab-login
+   ```
+5. Wait for the command to complete - this creates a new image with your login credentials
+
+## Step 3: Download the Project
 
 1. Go to [GitHub](https://github.com/Baby-Monitor-Simulator/Matlab-Docker-POC)
 2. Click the green "Code" button
 3. Click "Download ZIP"
 4. Extract the downloaded ZIP file to a location of your choice (e.g., Desktop)
 
-## Step 3: Start the Application
+## Step 4: Start the Application
 
 1. Open Docker Desktop (you can find it in your Start menu)
 2. Wait until Docker Desktop shows "Docker is running" in the bottom left corner
@@ -32,7 +46,7 @@ This guide will help you set up and run the Fetal-Maternal Physiology Model, eve
    ```
 6. Wait until you see messages indicating that the services are running
 
-## Step 4: Access the Web Interface
+## Step 5: Access the Web Interface
 
 1. Open your web browser (Chrome, Firefox, or Edge)
 2. Go to: `http://localhost:8765/index.html`
@@ -71,6 +85,7 @@ If you encounter any issues:
 2. Try closing and reopening Docker Desktop
 3. If the web interface doesn't load, try refreshing your browser
 4. If you see error messages in the Command Prompt, try running `docker-compose down` followed by `docker-compose up`
+5. If you see MATLAB license errors, make sure you completed Step 2 correctly
 
 ## Need Help?
 
