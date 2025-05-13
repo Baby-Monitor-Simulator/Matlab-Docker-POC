@@ -177,7 +177,7 @@ Send a stop command via WebSocket:
 }
 ```
 
-## Creating New Scripts
+## Creating New Scripts (recommended is to do it from parameterized script)
 
 1. Create a new MATLAB function in the `scripts/` directory
 2. The function must accept:
@@ -187,9 +187,18 @@ Send a stop command via WebSocket:
 3. Example structure:
    ```matlab
    function result = my_script(param1, param2, server, should_stop)
+      [scriptDir, ~, ~] = fileparts(mfilename('fullpath'));
+    
+      utilsDir = fullfile(scriptDir, 'utils');
+      if ~contains(path, scriptDir)
+        addpath(scriptDir);
+      end
+      if ~contains(path, utilsDir)
+        addpath(utilsDir);
+      end
        % Your code here
-       % Use server.write() to send data
-       % Check should_stop for termination
+       % Use `send_message(server, struct, 'name')` to send data, make sure you only use this once every cycle and just add multiple vars to the struct
+       % Check should_stop for termination `[should_stop, new_params] = check_messages(server);`
    end
    ```
 
