@@ -15,7 +15,7 @@ This guide will help you set up and run the Fetal-Maternal Physiology Model, eve
 1. Open Command Prompt (search for "cmd" in the Start menu)
 2. Run the following command to start MATLAB:
    ```
-   docker run -it --rm mathworks/matlab:r2024b matlab -n matlab-container -licmode onlinelicensing
+   docker run -it --name matlab-container --rm mathworks/matlab:r2024b matlab -licmode onlinelicensing
    ```
 3. When prompted, log in with your MATLAB account credentials
 4. After logging in, open a new Command Prompt window (cmd like step 1) and run:
@@ -24,14 +24,41 @@ This guide will help you set up and run the Fetal-Maternal Physiology Model, eve
    ```
 5. Wait for the command to complete - this creates a new image with your login credentials
 
-## Step 3: Download the Project
+## Step 3: Install MATLAB Add-ons
+
+1. Go to Microsoft Teams and download the MATLAB add-on ZIP files
+2. Extract all the downloaded ZIP files
+3. Copy all the extracted files into the `scripts/Add-Ons/instrument/` folder in your project directory
+   - If the `Add-Ons` folder doesn't exist, create it first
+   - The final structure should look like this:
+     ```
+     scripts/
+     └── Add-Ons/
+         └── icomm/
+             └── apps/
+             └── *more files*
+         └── instrument/
+             └── apps/
+             └── *more files*
+         └── signal/
+             └── deep/
+             └── *more files*
+         └── stats/
+             └── anomaly/
+             └── *more files*
+         └── symbolic/
+             └── graphics/
+             └── *more files*
+     ```
+
+## Step 4: Download the Project
 
 1. Go to [GitHub](https://github.com/Baby-Monitor-Simulator/Matlab-Docker-POC)
 2. Click the green "Code" button
 3. Click "Download ZIP"
 4. Extract the downloaded ZIP file to a location of your choice (e.g., Desktop)
 
-## Step 4: Start the Application
+## Step 5: Start the Application
 
 1. Open Docker Desktop (you can find it in your Start menu)
 2. Wait until Docker Desktop shows "Docker is running" in the bottom left corner
@@ -46,7 +73,7 @@ This guide will help you set up and run the Fetal-Maternal Physiology Model, eve
    ```
 6. Wait until you see messages indicating that the services are running
 
-## Step 5: Access the Web Interface
+## Step 6: Access the Web Interface
 
 1. Open your web browser (Chrome, Firefox, or Edge)
 2. Go to: `http://localhost:8765/index.html`
@@ -86,10 +113,11 @@ If you encounter any issues:
 3. If the web interface doesn't load, try refreshing your browser
 4. If you see error messages in the Command Prompt, try running `docker-compose down` followed by `docker-compose up`
 5. If you see MATLAB license errors, make sure you completed Step 2 correctly
+6. If you see add-on related errors, make sure you completed Step 3 correctly
 
 ## Need Help?
 
 If you need assistance:
 1. Check if your question is answered in this guide
-2. Contact the technical support team
+2. Contact the fontys student team
 3. Make sure to include any error messages you see in your request for help 
