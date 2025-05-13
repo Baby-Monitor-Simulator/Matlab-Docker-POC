@@ -34,7 +34,7 @@ This project sets up a MATLAB TCP server that can execute MATLAB scripts and com
 1. **Set up MATLAB License**:
    ```bash
    # Run MATLAB container
-   docker run -it --rm mathworks/matlab:r2024b matlab -n matlab-container -licmode onlinelicensing
+   docker run -it --name matlab-container --rm mathworks/matlab:r2024b matlab -licmode onlinelicensing
    
    # Login in the CLI of the running container
    
