@@ -3,7 +3,7 @@ version: "3.8"
 services:
   matlab_service:
     container_name: matlab-scripts
-    image: "matlab-login"
+    image: matlab-login
     environment:
       - PYTHONUNBUFFERED=1
     ports:
