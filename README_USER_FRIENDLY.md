@@ -17,7 +17,7 @@ This guide will help you set up and run the Fetal-Maternal Physiology Model, eve
    ```
    docker run -it --name matlab-container --rm mathworks/matlab:r2024b matlab -licmode onlinelicensing
    ```
-3. When prompted, log in with your MATLAB account credentials
+3. When prompted, log in with your MATLAB account credentials. Don't close the window yet, as it is needed during step 4.
 4. After logging in, open a new Command Prompt window (cmd like step 1) and run:
    ```
    docker commit matlab-container matlab-login
