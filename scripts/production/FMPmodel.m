@@ -4,12 +4,18 @@ function result = FMPmodel(vMother, vUterus, vFoetus, vUmbilical, vBrain, vCAVmo
     
     % Add the script directory and utils directory to the MATLAB path if not already there
     utilsDir = fullfile(scriptDir, 'utils');
+    addonsDir = fullfile(scriptDir, '..', 'Add-Ons');
     if ~contains(path, scriptDir)
         addpath(scriptDir);
     end
     if ~contains(path, utilsDir)
         addpath(utilsDir);
     end
+    if ~contains(path, addonsDir)
+        addpath(addonsDir);
+    end
+
+    which("adjoint")
     
     % PARAMETERIZED_EXAMPLE Simulate vital signs during birth
     %   This function simulates a series of heartbeats and calculates
