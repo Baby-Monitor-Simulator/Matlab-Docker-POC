@@ -26,7 +26,7 @@ function result = sinus(a, f, ts, tsp, te, server, should_stop)
     %
     %   Output:
     %       result - generated sine wave data
-    
+
     % Log received parameters
     disp(['MATLAB: sinus received parameters: a=' num2str(a) ', f=' num2str(f) ', ts=' num2str(ts) ', tsp=' num2str(tsp) ', te=' num2str(te)]);
     

@@ -80,6 +80,8 @@
                     <option value="sinus.m">Sinus Wave (sinus.m)</option>
                     <option value="parameterized_example.m">Vital Signs (parameterized_example.m)</option>
                     <option value="FMPmodel.m">FMPmodel (FMPmodel.m)</option>
+                    <option value="sinus_2.m">Sinus Wave 2.0 (sinus_2.m)</option>
+                    <option value="FMP_aanpassingen.m">FMP Ineke1 (FMP_aanpassingen.m)</option>
                 </select>
             </div>
             <div id="parametersContainer">
@@ -95,6 +97,7 @@
         </div>
 
         <canvas id="dataChart"></canvas>
+        <canvas id="dataChart2"></canvas>
     </div>
 
     <script>
@@ -136,7 +139,26 @@
                     { name: 'vNCycleMax', label: 'vNCycleMax', value: 300, step: 1 },
                     { name: 'vLamb', label: 'vLamb', value: 0, step: 1 }
                 ]
-            }
+            },
+            'sinus_2.m': {
+                name: 'Sinus Wave 2.0',
+                params: [
+                    { name: 'amplitude', label: 'Amplitude', value: 5, step: 0.1 },
+                    { name: 'frequency', label: 'Frequency (Hz)', value: 0.5, step: 0.1 },
+                    { name: 'startTime', label: 'Start Time (s)', value: 0, step: 0.1 },
+                    { name: 'timeStep', label: 'Time Step (s)', value: 0.1, step: 0.01 },
+                    { name: 'endTime', label: 'End Time (s)', value: 1, step: 0.1 }
+                ]
+            },
+            'FMP_aanpassingen.m':{
+                name: 'FMP Ineke',
+                params: [
+                    { name: 'numCycles', label: 'Number of Cycles', value: 100, step: 1 },
+                    { name: 'scenario', label: 'Scenario', value: 0, step: 1 },
+                    { name: 'HES', label: 'HES', value: 0, step: 1},
+                    { name: 'Persen', label: 'Persen', value: 0, step: 1 }
+                ]
+            },
         };
 
         // Color palette for multiple lines
@@ -151,6 +173,8 @@
 
         // Initialize Chart.js
         const ctx = document.getElementById('dataChart').getContext('2d');
+        const ctx2 = document.getElementById('dataChart2').getContext('2d');
+
         let chart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -176,9 +200,7 @@
                         }
                     }
                 },
-                animation: {
-                    duration: 0
-                },
+                animation: false,
                 plugins: {
                     legend: {
                         display: true,
@@ -188,19 +210,98 @@
             }
         });
 
+        let chart2 = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: []
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Time (s)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Value'
+                        }
+                    }
+                },
+                animation: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        function trimAndScroll(chart, dataset, maxVisible = 150) {
+            const totalLength = dataset.data.length;
+            if (totalLength > maxVisible) {
+            // Pas de chart view aan door de labels/data te slice
+                const start = totalLength - maxVisible;
+                chart.data.datasets.forEach(ds => {
+            // Maak een tijdelijke weergave-array
+                    ds._displayData = ds.data.slice(start); 
+                });
+                chart.options.scales.x.min = start;
+                chart.options.scales.x.max = totalLength - 1;
+            } else {
+                chart.options.scales.x.min = 0;
+                chart.options.scales.x.max = totalLength - 1;
+                chart.data.datasets.forEach(ds => {
+                    ds._displayData = ds.data;
+                });
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+        if (chart && chart.data.datasets) {
+            chart.data.datasets.forEach(dataset => {
+            dataset.data = []; // leeg alle punten
+        });
+        chart.update();
+        console.log('Grafiekdata gewist bij herladen');
+      }
+    });
+
+        window.addEventListener('DOMContentLoaded', () => {
+        if (chart2 && chart2.data.datasets) {
+            chart2.data.datasets.forEach(dataset => {
+            dataset.data = []; // leeg alle punten
+        });
+        chart2.update();
+        console.log('Grafiekdata gewist bij herladen');
+      }
+    });
+        
+
         // Function to get or create dataset for a variable
         function getDatasetForVariable(variableName) {
             console.log('Frontend: Looking for dataset:', variableName);
             // Check if dataset already exists
-            const existingDataset = chart.data.datasets.find(ds => ds.label === variableName);
+            const existingDataset = chart.data.datasets.find(ds => ds.label === variableName)|| chart2.data.datasets.find(ds => ds.label === variableName);
             if (existingDataset) {
                 console.log('Frontend: Found existing dataset');
                 return existingDataset;
             }
 
             console.log('Frontend: Creating new dataset for:', variableName);
+            //Besluiten in welke chart hij gaat op basis van wat er in de titel staat
+            const targetChart = variableName.includes('flow') ? chart2 : chart;
+
             // Create new dataset
-            const color = colors[chart.data.datasets.length % colors.length];
+            const color = colors[targetChart.data.datasets.length % colors.length];
             const newDataset = {
                 label: variableName,
                 data: [],
@@ -211,7 +312,7 @@
                 pointBackgroundColor: color
             };
 
-            chart.data.datasets.push(newDataset);
+            targetChart.data.datasets.push(newDataset);
             console.log('Frontend: Added new dataset:', newDataset);
             return newDataset;
         }
@@ -219,7 +320,9 @@
         // Function to clear all lines
         function clearLines() {
             chart.data.datasets = [];
+            chart2.data.datasets = [];
             chart.update();
+            chart2.update();
         }
 
         // Add event listener for clear lines button
@@ -285,6 +388,8 @@
                 document.getElementById('status').textContent = 'Error - Retrying...';
             };
 
+            const starttime = performance.now();
+
             ws.onmessage = function(event) {
                 console.log('Frontend: Received message:', event.data);
                 const data = JSON.parse(event.data);
@@ -306,6 +411,7 @@
                             document.getElementById('startBtn').disabled = false;
                             document.getElementById('stopBtn').disabled = true;
                             document.getElementById('updateBtn').disabled = true;
+                            resetSessionData();
                         }
                     }
                     return;  // Skip plotting for status messages
@@ -321,6 +427,7 @@
                         const dataset = getDatasetForVariable(variableName);
                         console.log('Frontend: Using dataset:', dataset.label);
                         
+                        const targetChart = variableName.includes('flow') ? chart2 : chart;
                         // Add the data point
                         const currentLength = dataset.data.length;
                         const newPoint = {
@@ -328,21 +435,31 @@
                             y: value
                         };
                         console.log('Frontend: Adding point:', newPoint);
-                        
+
+                        endtime1 = performance.now();
+                        var dif1 = endtime1 - starttime;
+                        console.log('Frontend: Time to process variable:', dif1.toFixed(3), 'ms');
+
                         dataset.data.push(newPoint);
                         console.log('Frontend: Dataset now has', dataset.data.length, 'points');
+                        trimAndScroll(targetChart, dataset);
                     });
                     
                     chart.update();
+                    chart2.update();
                     console.log('Frontend: Chart updated');
+
+                    endtime2 = performance.now();
+                    var dif2 = endtime2 - starttime;
+                    console.log('Frontend: Total time to process message:', dif2.toFixed(3), 'ms');
                 }
+
                 // Handle array data (for sinus.m)
                 else if (Array.isArray(data)) {
                     console.log('Frontend: Received array data of length:', data.length);
                     
                     // Get or create dataset for the default line
                     const dataset = getDatasetForVariable('Data');
-                    
                     const startTime = parseFloat(document.getElementById('startTime')?.value || 0);
                     const timeStep = parseFloat(document.getElementById('timeStep')?.value || 0.1);
                     const currentLength = dataset.data.length;
@@ -358,9 +475,15 @@
                     
                     // Append new points to existing data
                     dataset.data = [...dataset.data, ...points];
+                    trimAndScroll(chart, dataset);
                     
                     chart.update();
+                    chart2.update();
                 }
+
+                endtime3 = performance.now();
+                var dif3 = endtime3 - starttime;
+                console.log('Frontend: Total time to process message (including array handling):', dif3.toFixed(3), 'ms');
             };
         }
 

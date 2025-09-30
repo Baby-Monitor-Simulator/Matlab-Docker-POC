@@ -12,6 +12,9 @@ import atexit
 import aiohttp
 from aiohttp import web
 import pathlib
+import tracemalloc
+import csv
+import pandas as pd # type: ignore
 
 # Global variables to store current parameters and running state
 current_params = None
@@ -22,6 +25,7 @@ current_figure = None  # Keep track of the current figure
 data_file = None  # File to store accumulated data
 last_progress_update = 0  # Track last progress update time
 should_stop = False  # Flag to control MATLAB execution
+timedata = pd.DataFrame({"time-single-response": [], "time-total-while-loop": [], "return-time": []})
 
 def cleanup():
     """Cleanup function to ensure temporary file is removed on exit"""
@@ -296,24 +300,35 @@ async def send_script_to_matlab(script_name, params, ws):
         matlab_socket.connect(('matlab_service', 12345))
         matlab_socket.setblocking(False)  # Make socket non-blocking
         print("Controller: Connected to MATLAB service")
-        
         # Prepare the command
         command = {
             'type': 'start',
             'script': script_name,
             'params': params
         }
-        
+
         # Send the command
         print(f"Controller: Sending command to MATLAB: {command}")
         matlab_socket.send(json.dumps(command).encode())
         print("Controller: Command sent to MATLAB")
-        
+        looptime = time.perf_counter()
         # Process responses
         while not should_stop:
+            dif: float = 0.0
+            start = time.perf_counter()
+            diflooptime = start - looptime
+            looptime = time.perf_counter()
+
             try:
                 # Try to read response with timeout
+                bytes_waiting = matlab_socket.recv(4096, socket.MSG_PEEK)
+                print(f"Bytes waiting in buffer: {len(bytes_waiting)}")
+
+                # Now actually consume the data
                 response = matlab_socket.recv(4096).decode()
+
+
+                print(len(response), time.time())
                 if not response:
                     print("Controller: No response received from MATLAB")
                     break
@@ -351,10 +366,24 @@ async def send_script_to_matlab(script_name, params, ws):
                             elif isinstance(data, dict) and 'name' in data and 'value' in data:
                                 # Handle named variable data
                                 print(f"Controller: Received named variable: {data['name']} = {data['value']}")
+
+                                end = time.perf_counter()
+                                dif = end - start
+                                print(f"controller: Time Diff: {dif:.5f}")
+
+                                # timedata.loc[len(timedata), "time-single-response"] = round(dif, 5)
+
                                 await ws.send_json(data)
                             elif isinstance(data, dict):
                                 # Handle dictionary data with direct key-value pairs
                                 print(f"Controller: Received dictionary data: {data}")
+
+                                end = time.perf_counter()
+                                dif = end - start
+                                print(f"controller: Time Diff: {dif:.5f}")
+
+                                # timedata.loc[len(timedata), "time-single-response"] = round(dif, 5)
+
                                 await ws.send_json(data)
                                 print("Controller: Dictionary data forwarded successfully")
                             elif isinstance(data, list):
@@ -366,6 +395,13 @@ async def send_script_to_matlab(script_name, params, ws):
                                 
                                 # Forward to WebSocket client
                                 print("Controller: Forwarding data to WebSocket client")
+
+                                end = time.perf_counter()
+                                dif = end - start
+                                print(f"controller: Time Diff: {dif:.5f}")
+
+                                # timedata.loc[len(timedata), "time-single-response"] = round(dif, 5)
+
                                 await ws.send_json(data)
                                 print("Controller: Data forwarded successfully")
                         except json.JSONDecodeError:
@@ -381,7 +417,17 @@ async def send_script_to_matlab(script_name, params, ws):
             except Exception as e:
                 print(f"Controller: Error in MATLAB communication: {e}")
                 break
-                
+            end2 = time.perf_counter()
+            dif2 = end2 - start
+            print(f"controller: Loop Time Diff: {dif2:.5f}")
+
+            # timedata.loc[len(timedata), "time-total-while-loop"] = round(dif2, 5)
+            timedata.loc[len(timedata)] = {
+                "time-single-response": round(dif, 5), 
+                "time-total-while-loop": round(dif2, 5),
+                "return-time": round(diflooptime, 5)
+            }
+            
     except Exception as e:
         print(f"Controller: Error in send_script_to_matlab: {str(e)}")
         try:
@@ -395,6 +441,8 @@ async def send_script_to_matlab(script_name, params, ws):
             matlab_socket = None
         is_running = False
         should_stop = False
+        timedata.to_csv('time_data.csv', index=False)
+
 
 async def send_update_to_matlab(matlab_socket, params, ws):
     """Send update command to MATLAB in a separate task"""
