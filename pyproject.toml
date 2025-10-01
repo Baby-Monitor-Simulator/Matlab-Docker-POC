@@ -1,0 +1,21 @@
+[project]
+name = "matlab-docker-poc"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "aiohttp>=3.12.15",
+    "anyio>=4.11.0",
+    "matplotlib>=3.9.4",
+    "numpy>=2.0.2",
+    "pandas>=2.3.3",
+    "pytest-asyncio>=1.2.0",
+    "pytest-playwright>=0.7.1",
+    "websockets>=15.0.1",
+]
+[pytest]
+asyncio_mode = "auto"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
