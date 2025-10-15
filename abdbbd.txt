@@ -1,0 +1,846 @@
+2025-10-01 14:13:20 python-controller  | Bytes waiting in buffer: 136
+2025-10-01 14:13:20 python-controller  | 136 1759320800.0136094
+2025-10-01 14:13:20 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":50.43732707682603,"m_pressure_LV":4.9635254828893878,"m_flow_MV":3655.7865422867985,"f_pressure_LV":11.264154325557506}
+2025-10-01 14:13:20 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 50.43732707682603, 'm_pressure_LV': 4.963525482889388, 'm_flow_MV': 3655.7865422867985, 'f_pressure_LV': 11.264154325557506}
+2025-10-01 14:13:20 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 50.43732707682603, 'm_pressure_LV': 4.963525482889388, 'm_flow_MV': 3655.7865422867985, 'f_pressure_LV': 11.264154325557506}
+2025-10-01 14:13:20 python-controller  | controller: Time Diff: 0.00025
+2025-10-01 14:13:20 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:20 python-controller  | controller: Loop Time Diff: 0.00051
+2025-10-01 14:13:20 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:20 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:20 python-controller  | 61 1759320800.1177316
+2025-10-01 14:13:20 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:20 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:20 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:20 python-controller  | controller: Time Diff: 0.00015
+2025-10-01 14:13:20 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:20 python-controller  | controller: Loop Time Diff: 0.00031
+2025-10-01 14:13:20 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:20 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:20 python-controller  | 137 1759320800.2205937
+2025-10-01 14:13:20 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":50.050204631432173,"m_pressure_LV":5.1813573538095747,"m_flow_MV":3101.0185263521262,"f_pressure_LV":6.1979843975881348}
+2025-10-01 14:13:20 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 50.05020463143217, 'm_pressure_LV': 5.181357353809575, 'm_flow_MV': 3101.018526352126, 'f_pressure_LV': 6.197984397588135}
+2025-10-01 14:13:20 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 50.05020463143217, 'm_pressure_LV': 5.181357353809575, 'm_flow_MV': 3101.018526352126, 'f_pressure_LV': 6.197984397588135}
+2025-10-01 14:13:20 python-controller  | controller: Time Diff: 0.00017
+2025-10-01 14:13:20 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:20 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:20 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:20 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:20 python-controller  | 61 1759320800.3236177
+2025-10-01 14:13:20 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:20 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:20 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:20 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:20 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:20 python-controller  | controller: Loop Time Diff: 0.00037
+2025-10-01 14:13:20 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:20 python-controller  | Bytes waiting in buffer: 136
+2025-10-01 14:13:20 python-controller  | 136 1759320800.426396
+2025-10-01 14:13:20 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":49.66656235602381,"m_pressure_LV":5.5973294636515556,"m_flow_MV":2022.9444993571599,"f_pressure_LV":4.1115311561534948}
+2025-10-01 14:13:20 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 49.66656235602381, 'm_pressure_LV': 5.597329463651556, 'm_flow_MV': 2022.9444993571599, 'f_pressure_LV': 4.111531156153495}
+2025-10-01 14:13:20 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 49.66656235602381, 'm_pressure_LV': 5.597329463651556, 'm_flow_MV': 2022.9444993571599, 'f_pressure_LV': 4.111531156153495}
+2025-10-01 14:13:20 python-controller  | controller: Time Diff: 0.00020
+2025-10-01 14:13:20 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:20 python-controller  | controller: Loop Time Diff: 0.00041
+2025-10-01 14:13:20 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:20 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:20 python-controller  | 61 1759320800.5292401
+2025-10-01 14:13:20 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:20 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:20 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:20 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:20 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:20 python-controller  | controller: Loop Time Diff: 0.00039
+2025-10-01 14:13:20 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:20 python-controller  | Bytes waiting in buffer: 140
+2025-10-01 14:13:20 python-controller  | 140 1759320800.6321986
+2025-10-01 14:13:20 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":49.286402024864188,"m_pressure_LV":13.412359218012266,"m_flow_MV":-0.018717049656847697,"f_pressure_LV":3.1982201266411834}
+2025-10-01 14:13:20 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 49.28640202486419, 'm_pressure_LV': 13.412359218012266, 'm_flow_MV': -0.018717049656847697, 'f_pressure_LV': 3.1982201266411834}
+2025-10-01 14:13:20 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 49.28640202486419, 'm_pressure_LV': 13.412359218012266, 'm_flow_MV': -0.018717049656847697, 'f_pressure_LV': 3.1982201266411834}
+2025-10-01 14:13:20 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:20 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:20 python-controller  | controller: Loop Time Diff: 0.00059
+2025-10-01 14:13:20 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:20 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:20 python-controller  | 61 1759320800.7351563
+2025-10-01 14:13:20 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:20 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:20 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:20 python-controller  | controller: Time Diff: 0.00017
+2025-10-01 14:13:20 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:20 python-controller  | controller: Loop Time Diff: 0.00033
+2025-10-01 14:13:20 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:20 python-controller  | Bytes waiting in buffer: 140
+2025-10-01 14:13:20 python-controller  | 140 1759320800.938143
+2025-10-01 14:13:20 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":48.909736968153545,"m_pressure_LV":31.471217467856967,"m_flow_MV":-0.066703384997139056,"f_pressure_LV":2.9898423574215736}
+2025-10-01 14:13:20 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 48.909736968153545, 'm_pressure_LV': 31.471217467856967, 'm_flow_MV': -0.06670338499713906, 'f_pressure_LV': 2.9898423574215736}
+2025-10-01 14:13:20 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 48.909736968153545, 'm_pressure_LV': 31.471217467856967, 'm_flow_MV': -0.06670338499713906, 'f_pressure_LV': 2.9898423574215736}
+2025-10-01 14:13:20 python-controller  | controller: Time Diff: 0.00012
+2025-10-01 14:13:20 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:20 python-controller  | controller: Loop Time Diff: 0.00035
+2025-10-01 14:13:20 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:20 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:20 python-controller  | 61 1759320800.9408119
+2025-10-01 14:13:20 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:20 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:20 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:20 python-controller  | controller: Time Diff: 0.00024
+2025-10-01 14:13:20 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:20 python-controller  | controller: Loop Time Diff: 0.00055
+2025-10-01 14:13:21 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:21 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:21 python-controller  | 139 1759320801.143949
+2025-10-01 14:13:21 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":48.558271231871309,"m_pressure_LV":56.888563972756359,"m_flow_MV":-0.13426376481755994,"f_pressure_LV":3.4341428718322535}
+2025-10-01 14:13:21 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 48.55827123187131, 'm_pressure_LV': 56.88856397275636, 'm_flow_MV': -0.13426376481755994, 'f_pressure_LV': 3.4341428718322535}
+2025-10-01 14:13:21 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 48.55827123187131, 'm_pressure_LV': 56.88856397275636, 'm_flow_MV': -0.13426376481755994, 'f_pressure_LV': 3.4341428718322535}
+2025-10-01 14:13:21 python-controller  | controller: Time Diff: 0.00010
+2025-10-01 14:13:21 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:21 python-controller  | controller: Loop Time Diff: 0.00028
+2025-10-01 14:13:21 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:21 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:21 python-controller  | 61 1759320801.2470434
+2025-10-01 14:13:21 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:21 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:21 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:21 python-controller  | controller: Time Diff: 0.00013
+2025-10-01 14:13:21 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:21 python-controller  | controller: Loop Time Diff: 0.00032
+2025-10-01 14:13:21 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:21 python-controller  | Bytes waiting in buffer: 138
+2025-10-01 14:13:21 python-controller  | 138 1759320801.3499827
+2025-10-01 14:13:21 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":49.005029096501637,"m_pressure_LV":76.16238199774331,"m_flow_MV":-0.18548251757734449,"f_pressure_LV":4.4984329844539817}
+2025-10-01 14:13:21 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 49.00502909650164, 'm_pressure_LV': 76.16238199774331, 'm_flow_MV': -0.1854825175773445, 'f_pressure_LV': 4.498432984453982}
+2025-10-01 14:13:21 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 49.00502909650164, 'm_pressure_LV': 76.16238199774331, 'm_flow_MV': -0.1854825175773445, 'f_pressure_LV': 4.498432984453982}
+2025-10-01 14:13:21 python-controller  | controller: Time Diff: 0.00014
+2025-10-01 14:13:21 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:21 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:21 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:21 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:21 python-controller  | 61 1759320801.452985
+2025-10-01 14:13:21 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:21 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:21 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:21 python-controller  | controller: Time Diff: 0.00011
+2025-10-01 14:13:21 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:21 python-controller  | controller: Loop Time Diff: 0.00030
+2025-10-01 14:13:21 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:21 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:21 python-controller  | 139 1759320801.5558784
+2025-10-01 14:13:21 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":50.574026766650221,"m_pressure_LV":89.244899474176847,"m_flow_MV":-0.22023141530685084,"f_pressure_LV":5.6707620076378991}
+2025-10-01 14:13:21 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 50.57402676665022, 'm_pressure_LV': 89.24489947417685, 'm_flow_MV': -0.22023141530685084, 'f_pressure_LV': 5.670762007637899}
+2025-10-01 14:13:21 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 50.57402676665022, 'm_pressure_LV': 89.24489947417685, 'm_flow_MV': -0.22023141530685084, 'f_pressure_LV': 5.670762007637899}
+2025-10-01 14:13:21 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:21 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:21 python-controller  | controller: Loop Time Diff: 0.00040
+2025-10-01 14:13:21 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:21 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:21 python-controller  | 61 1759320801.6590333
+2025-10-01 14:13:21 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:21 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:21 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:21 python-controller  | controller: Time Diff: 0.00013
+2025-10-01 14:13:21 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:21 python-controller  | controller: Loop Time Diff: 0.00037
+2025-10-01 14:13:21 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:21 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:21 python-controller  | 139 1759320801.7633317
+2025-10-01 14:13:21 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":52.837289314941494,"m_pressure_LV":96.226428659829509,"m_flow_MV":-0.23874964024971096,"f_pressure_LV":6.8544853053126644}
+2025-10-01 14:13:21 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 52.83728931494149, 'm_pressure_LV': 96.22642865982951, 'm_flow_MV': -0.23874964024971096, 'f_pressure_LV': 6.854485305312664}
+2025-10-01 14:13:21 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 52.83728931494149, 'm_pressure_LV': 96.22642865982951, 'm_flow_MV': -0.23874964024971096, 'f_pressure_LV': 6.854485305312664}
+2025-10-01 14:13:21 python-controller  | controller: Time Diff: 0.00013
+2025-10-01 14:13:21 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:21 python-controller  | controller: Loop Time Diff: 0.00035
+2025-10-01 14:13:21 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:21 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:21 python-controller  | 61 1759320801.866108
+2025-10-01 14:13:21 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:21 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:21 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:21 python-controller  | controller: Time Diff: 0.00012
+2025-10-01 14:13:21 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:21 python-controller  | controller: Loop Time Diff: 0.00034
+2025-10-01 14:13:21 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:21 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:21 python-controller  | 137 1759320801.9691713
+2025-10-01 14:13:21 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":55.334563421491922,"m_pressure_LV":96.982199482177137,"m_flow_MV":-0.24070472670984133,"f_pressure_LV":8.00293911597728}
+2025-10-01 14:13:21 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 55.33456342149192, 'm_pressure_LV': 96.98219948217714, 'm_flow_MV': -0.24070472670984133, 'f_pressure_LV': 8.00293911597728}
+2025-10-01 14:13:21 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 55.33456342149192, 'm_pressure_LV': 96.98219948217714, 'm_flow_MV': -0.24070472670984133, 'f_pressure_LV': 8.00293911597728}
+2025-10-01 14:13:21 python-controller  | controller: Time Diff: 0.00016
+2025-10-01 14:13:21 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:21 python-controller  | controller: Loop Time Diff: 0.00039
+2025-10-01 14:13:22 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:22 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:22 python-controller  | 61 1759320802.0720289
+2025-10-01 14:13:22 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:22 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:22 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:22 python-controller  | controller: Time Diff: 0.00015
+2025-10-01 14:13:22 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:22 python-controller  | controller: Loop Time Diff: 0.00036
+2025-10-01 14:13:22 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:22 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:22 python-controller  | 139 1759320802.1748664
+2025-10-01 14:13:22 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":57.633243287125545,"m_pressure_LV":91.877235209381681,"m_flow_MV":-0.22706754469353002,"f_pressure_LV":9.0759073609488787}
+2025-10-01 14:13:22 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 57.633243287125545, 'm_pressure_LV': 91.87723520938168, 'm_flow_MV': -0.22706754469353002, 'f_pressure_LV': 9.075907360948879}
+2025-10-01 14:13:22 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 57.633243287125545, 'm_pressure_LV': 91.87723520938168, 'm_flow_MV': -0.22706754469353002, 'f_pressure_LV': 9.075907360948879}
+2025-10-01 14:13:22 python-controller  | controller: Time Diff: 0.00013
+2025-10-01 14:13:22 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:22 python-controller  | controller: Loop Time Diff: 0.00031
+2025-10-01 14:13:22 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:22 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:22 python-controller  | 61 1759320802.2780106
+2025-10-01 14:13:22 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:22 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:22 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:22 python-controller  | controller: Time Diff: 0.00015
+2025-10-01 14:13:22 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:22 python-controller  | controller: Loop Time Diff: 0.00036
+2025-10-01 14:13:22 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:22 python-controller  | Bytes waiting in buffer: 138
+2025-10-01 14:13:22 python-controller  | 138 1759320802.3808239
+2025-10-01 14:13:22 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":59.405026596293993,"m_pressure_LV":84.44000555544639,"m_flow_MV":-0.20722417573990931,"f_pressure_LV":10.044529653554521}
+2025-10-01 14:13:22 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 59.40502659629399, 'm_pressure_LV': 84.44000555544639, 'm_flow_MV': -0.2072241757399093, 'f_pressure_LV': 10.044529653554521}
+2025-10-01 14:13:22 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 59.40502659629399, 'm_pressure_LV': 84.44000555544639, 'm_flow_MV': -0.2072241757399093, 'f_pressure_LV': 10.044529653554521}
+2025-10-01 14:13:22 python-controller  | controller: Time Diff: 0.00024
+2025-10-01 14:13:22 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:22 python-controller  | controller: Loop Time Diff: 0.00047
+2025-10-01 14:13:22 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:22 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:22 python-controller  | 61 1759320802.484251
+2025-10-01 14:13:22 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:22 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:22 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:22 python-controller  | controller: Time Diff: 0.00020
+2025-10-01 14:13:22 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:22 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:22 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:22 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:22 python-controller  | 139 1759320802.5872242
+2025-10-01 14:13:22 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":60.527682554293108,"m_pressure_LV":75.297370679980489,"m_flow_MV":-0.18284268906731613,"f_pressure_LV":10.893003147619842}
+2025-10-01 14:13:22 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 60.52768255429311, 'm_pressure_LV': 75.29737067998049, 'm_flow_MV': -0.18284268906731613, 'f_pressure_LV': 10.893003147619842}
+2025-10-01 14:13:22 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 60.52768255429311, 'm_pressure_LV': 75.29737067998049, 'm_flow_MV': -0.18284268906731613, 'f_pressure_LV': 10.893003147619842}
+2025-10-01 14:13:22 python-controller  | controller: Time Diff: 0.00018
+2025-10-01 14:13:22 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:22 python-controller  | controller: Loop Time Diff: 0.00037
+2025-10-01 14:13:22 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:22 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:22 python-controller  | 61 1759320802.6907547
+2025-10-01 14:13:22 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:22 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:22 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:22 python-controller  | controller: Time Diff: 0.00022
+2025-10-01 14:13:22 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:22 python-controller  | controller: Loop Time Diff: 0.00043
+2025-10-01 14:13:22 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:22 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:22 python-controller  | 139 1759320802.793851
+2025-10-01 14:13:22 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":60.945497815599147,"m_pressure_LV":65.399059910367569,"m_flow_MV":-0.15645010035340795,"f_pressure_LV":11.617465438641309}
+2025-10-01 14:13:22 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 60.94549781559915, 'm_pressure_LV': 65.39905991036757, 'm_flow_MV': -0.15645010035340795, 'f_pressure_LV': 11.61746543864131}
+2025-10-01 14:13:22 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 60.94549781559915, 'm_pressure_LV': 65.39905991036757, 'm_flow_MV': -0.15645010035340795, 'f_pressure_LV': 11.61746543864131}
+2025-10-01 14:13:22 python-controller  | controller: Time Diff: 0.00021
+2025-10-01 14:13:22 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:22 python-controller  | controller: Loop Time Diff: 0.00040
+2025-10-01 14:13:22 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:22 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:22 python-controller  | 61 1759320802.8969584
+2025-10-01 14:13:22 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:22 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:22 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:22 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:22 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:22 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:22 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:23 python-controller  | Bytes waiting in buffer: 136
+2025-10-01 14:13:23 python-controller  | 136 1759320802.9999907
+2025-10-01 14:13:23 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":60.655949654388,"m_pressure_LV":56.324887476237372,"m_flow_MV":-0.13224950730668156,"f_pressure_LV":12.223184458157119}
+2025-10-01 14:13:23 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 60.655949654388, 'm_pressure_LV': 56.32488747623737, 'm_flow_MV': -0.13224950730668156, 'f_pressure_LV': 12.22318445815712}
+2025-10-01 14:13:23 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 60.655949654388, 'm_pressure_LV': 56.32488747623737, 'm_flow_MV': -0.13224950730668156, 'f_pressure_LV': 12.22318445815712}
+2025-10-01 14:13:23 python-controller  | controller: Time Diff: 0.00027
+2025-10-01 14:13:23 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:23 python-controller  | controller: Loop Time Diff: 0.00057
+2025-10-01 14:13:23 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:23 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:23 python-controller  | 61 1759320803.103811
+2025-10-01 14:13:23 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.147634004867882}
+2025-10-01 14:13:23 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:23 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.14763400486788}
+2025-10-01 14:13:23 python-controller  | controller: Time Diff: 0.00016
+2025-10-01 14:13:23 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:23 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:23 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:23 python-controller  | Bytes waiting in buffer: 136
+2025-10-01 14:13:23 python-controller  | 136 1759320803.2072499
+2025-10-01 14:13:23 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":60.18097749783675,"m_pressure_LV":42.095257887792,"m_flow_MV":-0.094335785158858765,"f_pressure_LV":18.646444860679104}
+2025-10-01 14:13:23 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 60.18097749783675, 'm_pressure_LV': 42.095257887792, 'm_flow_MV': -0.09433578515885876, 'f_pressure_LV': 18.646444860679104}
+2025-10-01 14:13:23 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 60.18097749783675, 'm_pressure_LV': 42.095257887792, 'm_flow_MV': -0.09433578515885876, 'f_pressure_LV': 18.646444860679104}
+2025-10-01 14:13:23 python-controller  | controller: Time Diff: 0.00022
+2025-10-01 14:13:23 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:23 python-controller  | controller: Loop Time Diff: 0.00044
+2025-10-01 14:13:23 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:23 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:23 python-controller  | 60 1759320803.3101356
+2025-10-01 14:13:23 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:23 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:23 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:23 python-controller  | controller: Time Diff: 0.00020
+2025-10-01 14:13:23 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:23 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:23 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:23 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:23 python-controller  | 137 1759320803.5132256
+2025-10-01 14:13:23 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":59.710536887516533,"m_pressure_LV":28.2157736404524,"m_flow_MV":-0.05735392966754168,"f_pressure_LV":35.667698639194981}
+2025-10-01 14:13:23 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 59.71053688751653, 'm_pressure_LV': 28.2157736404524, 'm_flow_MV': -0.05735392966754168, 'f_pressure_LV': 35.66769863919498}
+2025-10-01 14:13:23 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 59.71053688751653, 'm_pressure_LV': 28.2157736404524, 'm_flow_MV': -0.05735392966754168, 'f_pressure_LV': 35.66769863919498}
+2025-10-01 14:13:23 python-controller  | controller: Time Diff: 0.00011
+2025-10-01 14:13:23 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:23 python-controller  | controller: Loop Time Diff: 0.00029
+2025-10-01 14:13:23 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:23 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:23 python-controller  | 60 1759320803.616189
+2025-10-01 14:13:23 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:23 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:23 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:23 python-controller  | controller: Time Diff: 0.00013
+2025-10-01 14:13:23 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:23 python-controller  | controller: Loop Time Diff: 0.00031
+2025-10-01 14:13:23 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:23 python-controller  | Bytes waiting in buffer: 138
+2025-10-01 14:13:23 python-controller  | 138 1759320803.7193038
+2025-10-01 14:13:23 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":59.244539270288925,"m_pressure_LV":15.745418440562128,"m_flow_MV":-0.0241208634980701,"f_pressure_LV":51.937108311361364}
+2025-10-01 14:13:23 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 59.244539270288925, 'm_pressure_LV': 15.745418440562128, 'm_flow_MV': -0.0241208634980701, 'f_pressure_LV': 51.937108311361364}
+2025-10-01 14:13:23 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 59.244539270288925, 'm_pressure_LV': 15.745418440562128, 'm_flow_MV': -0.0241208634980701, 'f_pressure_LV': 51.937108311361364}
+2025-10-01 14:13:23 python-controller  | controller: Time Diff: 0.00012
+2025-10-01 14:13:23 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:23 python-controller  | controller: Loop Time Diff: 0.00030
+2025-10-01 14:13:23 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:23 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:23 python-controller  | 60 1759320803.8221524
+2025-10-01 14:13:23 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:23 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:23 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:23 python-controller  | controller: Time Diff: 0.00011
+2025-10-01 14:13:23 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:23 python-controller  | controller: Loop Time Diff: 0.00031
+2025-10-01 14:13:23 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:23 python-controller  | Bytes waiting in buffer: 136
+2025-10-01 14:13:23 python-controller  | 136 1759320803.9251232
+2025-10-01 14:13:23 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":58.782911217401249,"m_pressure_LV":5.7019528458617659,"m_flow_MV":2655.7706292515882,"f_pressure_LV":58.77680789668338}
+2025-10-01 14:13:23 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 58.78291121740125, 'm_pressure_LV': 5.701952845861766, 'm_flow_MV': 2655.770629251588, 'f_pressure_LV': 58.77680789668338}
+2025-10-01 14:13:23 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 58.78291121740125, 'm_pressure_LV': 5.701952845861766, 'm_flow_MV': 2655.770629251588, 'f_pressure_LV': 58.77680789668338}
+2025-10-01 14:13:23 python-controller  | controller: Time Diff: 0.00012
+2025-10-01 14:13:23 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:23 python-controller  | controller: Loop Time Diff: 0.00030
+2025-10-01 14:13:23 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:24 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:24 python-controller  | 60 1759320804.0278845
+2025-10-01 14:13:24 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:24 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:24 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:24 python-controller  | controller: Time Diff: 0.00010
+2025-10-01 14:13:24 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:24 python-controller  | controller: Loop Time Diff: 0.00036
+2025-10-01 14:13:24 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:24 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:24 python-controller  | 137 1759320804.1311243
+2025-10-01 14:13:24 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":58.325522371496035,"m_pressure_LV":1.7219238300233937,"m_flow_MV":13238.313586925033,"f_pressure_LV":55.045085933457777}
+2025-10-01 14:13:24 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 58.325522371496035, 'm_pressure_LV': 1.7219238300233937, 'm_flow_MV': 13238.313586925033, 'f_pressure_LV': 55.04508593345778}
+2025-10-01 14:13:24 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 58.325522371496035, 'm_pressure_LV': 1.7219238300233937, 'm_flow_MV': 13238.313586925033, 'f_pressure_LV': 55.04508593345778}
+2025-10-01 14:13:24 python-controller  | controller: Time Diff: 0.00011
+2025-10-01 14:13:24 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:24 python-controller  | controller: Loop Time Diff: 0.00030
+2025-10-01 14:13:24 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:24 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:24 python-controller  | 60 1759320804.233964
+2025-10-01 14:13:24 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:24 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:24 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:24 python-controller  | controller: Time Diff: 0.00010
+2025-10-01 14:13:24 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:24 python-controller  | controller: Loop Time Diff: 0.00029
+2025-10-01 14:13:24 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:24 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:24 python-controller  | 139 1759320804.3368905
+2025-10-01 14:13:24 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":57.872096197715052,"m_pressure_LV":0.074187602617672974,"m_flow_MV":17558.984120577174,"f_pressure_LV":46.161967813706752}
+2025-10-01 14:13:24 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 57.87209619771505, 'm_pressure_LV': 0.07418760261767297, 'm_flow_MV': 17558.984120577174, 'f_pressure_LV': 46.16196781370675}
+2025-10-01 14:13:24 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 57.87209619771505, 'm_pressure_LV': 0.07418760261767297, 'm_flow_MV': 17558.984120577174, 'f_pressure_LV': 46.16196781370675}
+2025-10-01 14:13:24 python-controller  | controller: Time Diff: 0.00016
+2025-10-01 14:13:24 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:24 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:24 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:24 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:24 python-controller  | 60 1759320804.4399457
+2025-10-01 14:13:24 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:24 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:24 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:24 python-controller  | controller: Time Diff: 0.00014
+2025-10-01 14:13:24 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:24 python-controller  | controller: Loop Time Diff: 0.00029
+2025-10-01 14:13:24 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:24 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:24 python-controller  | 137 1759320804.5434182
+2025-10-01 14:13:24 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":57.422456309254834,"m_pressure_LV":-0.73113921511935942,"m_flow_MV":19613.275686937053,"f_pressure_LV":32.3527261842543}
+2025-10-01 14:13:24 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 57.422456309254834, 'm_pressure_LV': -0.7311392151193594, 'm_flow_MV': 19613.275686937053, 'f_pressure_LV': 32.3527261842543}
+2025-10-01 14:13:24 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 57.422456309254834, 'm_pressure_LV': -0.7311392151193594, 'm_flow_MV': 19613.275686937053, 'f_pressure_LV': 32.3527261842543}
+2025-10-01 14:13:24 python-controller  | controller: Time Diff: 0.00011
+2025-10-01 14:13:24 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:24 python-controller  | controller: Loop Time Diff: 0.00026
+2025-10-01 14:13:24 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:24 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:24 python-controller  | 60 1759320804.646299
+2025-10-01 14:13:24 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:24 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:24 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:24 python-controller  | controller: Time Diff: 0.00013
+2025-10-01 14:13:24 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:24 python-controller  | controller: Loop Time Diff: 0.00032
+2025-10-01 14:13:24 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:24 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:24 python-controller  | 137 1759320804.7493954
+2025-10-01 14:13:24 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":56.976496268562173,"m_pressure_LV":-1.1146471072721844,"m_flow_MV":20533.480992368848,"f_pressure_LV":17.96864105824249}
+2025-10-01 14:13:24 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 56.97649626856217, 'm_pressure_LV': -1.1146471072721844, 'm_flow_MV': 20533.480992368848, 'f_pressure_LV': 17.96864105824249}
+2025-10-01 14:13:24 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 56.97649626856217, 'm_pressure_LV': -1.1146471072721844, 'm_flow_MV': 20533.480992368848, 'f_pressure_LV': 17.96864105824249}
+2025-10-01 14:13:24 python-controller  | controller: Time Diff: 0.00010
+2025-10-01 14:13:24 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:24 python-controller  | controller: Loop Time Diff: 0.00028
+2025-10-01 14:13:24 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:24 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:24 python-controller  | 60 1759320804.852089
+2025-10-01 14:13:24 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:24 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:24 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:24 python-controller  | controller: Time Diff: 0.00010
+2025-10-01 14:13:24 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:24 python-controller  | controller: Loop Time Diff: 0.00027
+2025-10-01 14:13:24 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:24 python-controller  | Bytes waiting in buffer: 136
+2025-10-01 14:13:24 python-controller  | 136 1759320804.9548972
+2025-10-01 14:13:24 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":56.534144301339687,"m_pressure_LV":-1.2879776389400892,"m_flow_MV":20889.031575887413,"f_pressure_LV":8.64058473591421}
+2025-10-01 14:13:24 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 56.53414430133969, 'm_pressure_LV': -1.2879776389400892, 'm_flow_MV': 20889.031575887413, 'f_pressure_LV': 8.64058473591421}
+2025-10-01 14:13:24 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 56.53414430133969, 'm_pressure_LV': -1.2879776389400892, 'm_flow_MV': 20889.031575887413, 'f_pressure_LV': 8.64058473591421}
+2025-10-01 14:13:24 python-controller  | controller: Time Diff: 0.00018
+2025-10-01 14:13:24 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:24 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:25 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:25 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:25 python-controller  | 60 1759320805.0579278
+2025-10-01 14:13:25 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:25 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:25 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:25 python-controller  | controller: Time Diff: 0.00011
+2025-10-01 14:13:25 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:25 python-controller  | controller: Loop Time Diff: 0.00024
+2025-10-01 14:13:25 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:25 python-controller  | Bytes waiting in buffer: 138
+2025-10-01 14:13:25 python-controller  | 138 1759320805.1607413
+2025-10-01 14:13:25 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":56.095347592886434,"m_pressure_LV":-1.2975637257345245,"m_flow_MV":20807.328215164864,"f_pressure_LV":5.1567138704884075}
+2025-10-01 14:13:25 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 56.095347592886434, 'm_pressure_LV': -1.2975637257345245, 'm_flow_MV': 20807.328215164864, 'f_pressure_LV': 5.1567138704884075}
+2025-10-01 14:13:25 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 56.095347592886434, 'm_pressure_LV': -1.2975637257345245, 'm_flow_MV': 20807.328215164864, 'f_pressure_LV': 5.1567138704884075}
+2025-10-01 14:13:25 python-controller  | controller: Time Diff: 0.00023
+2025-10-01 14:13:25 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:25 python-controller  | controller: Loop Time Diff: 0.00050
+2025-10-01 14:13:25 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:25 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:25 python-controller  | 60 1759320805.2640498
+2025-10-01 14:13:25 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:25 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:25 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:25 python-controller  | controller: Time Diff: 0.00015
+2025-10-01 14:13:25 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:25 python-controller  | controller: Loop Time Diff: 0.00033
+2025-10-01 14:13:25 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:25 python-controller  | Bytes waiting in buffer: 138
+2025-10-01 14:13:25 python-controller  | 138 1759320805.366823
+2025-10-01 14:13:25 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":55.660067361448732,"m_pressure_LV":-1.1316622836280352,"m_flow_MV":20260.626029023453,"f_pressure_LV":3.6455307952694862}
+2025-10-01 14:13:25 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 55.66006736144873, 'm_pressure_LV': -1.1316622836280352, 'm_flow_MV': 20260.626029023453, 'f_pressure_LV': 3.645530795269486}
+2025-10-01 14:13:25 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 55.66006736144873, 'm_pressure_LV': -1.1316622836280352, 'm_flow_MV': 20260.626029023453, 'f_pressure_LV': 3.645530795269486}
+2025-10-01 14:13:25 python-controller  | controller: Time Diff: 0.00021
+2025-10-01 14:13:25 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:25 python-controller  | controller: Loop Time Diff: 0.00048
+2025-10-01 14:13:25 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:25 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:25 python-controller  | 60 1759320805.4707425
+2025-10-01 14:13:25 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:25 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:25 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:25 python-controller  | controller: Time Diff: 0.00016
+2025-10-01 14:13:25 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:25 python-controller  | controller: Loop Time Diff: 0.00035
+2025-10-01 14:13:25 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:25 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:25 python-controller  | 139 1759320805.5735345
+2025-10-01 14:13:25 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":55.228278502727619,"m_pressure_LV":-0.73578105471637856,"m_flow_MV":19108.090580693144,"f_pressure_LV":3.0379772743825564}
+2025-10-01 14:13:25 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 55.22827850272762, 'm_pressure_LV': -0.7357810547163786, 'm_flow_MV': 19108.090580693144, 'f_pressure_LV': 3.0379772743825564}
+2025-10-01 14:13:25 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 55.22827850272762, 'm_pressure_LV': -0.7357810547163786, 'm_flow_MV': 19108.090580693144, 'f_pressure_LV': 3.0379772743825564}
+2025-10-01 14:13:25 python-controller  | controller: Time Diff: 0.00014
+2025-10-01 14:13:25 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:25 python-controller  | controller: Loop Time Diff: 0.00032
+2025-10-01 14:13:25 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:25 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:25 python-controller  | 60 1759320805.676756
+2025-10-01 14:13:25 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:25 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:25 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:25 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:25 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:25 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:25 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:25 python-controller  | Bytes waiting in buffer: 140
+2025-10-01 14:13:25 python-controller  | 140 1759320805.7798703
+2025-10-01 14:13:25 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":54.799972218583662,"m_pressure_LV":-0.072509170043296947,"m_flow_MV":17255.710967486717,"f_pressure_LV":3.0845385467649491}
+2025-10-01 14:13:25 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 54.79997221858366, 'm_pressure_LV': -0.07250917004329695, 'm_flow_MV': 17255.710967486717, 'f_pressure_LV': 3.084538546764949}
+2025-10-01 14:13:25 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 54.79997221858366, 'm_pressure_LV': -0.07250917004329695, 'm_flow_MV': 17255.710967486717, 'f_pressure_LV': 3.084538546764949}
+2025-10-01 14:13:25 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:25 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:25 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:25 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:25 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:25 python-controller  | 60 1759320805.882779
+2025-10-01 14:13:25 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:25 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:25 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:25 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:25 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:25 python-controller  | controller: Loop Time Diff: 0.00041
+2025-10-01 14:13:25 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:25 python-controller  | Bytes waiting in buffer: 136
+2025-10-01 14:13:25 python-controller  | 136 1759320805.9857662
+2025-10-01 14:13:25 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":54.375156743803423,"m_pressure_LV":0.60759870265407556,"m_flow_MV":15373.18511939053,"f_pressure_LV":3.819534195833469}
+2025-10-01 14:13:25 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 54.37515674380342, 'm_pressure_LV': 0.6075987026540756, 'm_flow_MV': 15373.18511939053, 'f_pressure_LV': 3.819534195833469}
+2025-10-01 14:13:25 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 54.37515674380342, 'm_pressure_LV': 0.6075987026540756, 'm_flow_MV': 15373.18511939053, 'f_pressure_LV': 3.819534195833469}
+2025-10-01 14:13:25 python-controller  | controller: Time Diff: 0.00018
+2025-10-01 14:13:25 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:25 python-controller  | controller: Loop Time Diff: 0.00035
+2025-10-01 14:13:26 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:26 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:26 python-controller  | 60 1759320806.0885577
+2025-10-01 14:13:26 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:26 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:26 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:26 python-controller  | controller: Time Diff: 0.00030
+2025-10-01 14:13:26 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:26 python-controller  | controller: Loop Time Diff: 0.00046
+2025-10-01 14:13:26 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:26 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:26 python-controller  | 137 1759320806.1916928
+2025-10-01 14:13:26 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":53.953845317670833,"m_pressure_LV":1.2568904755295707,"m_flow_MV":13586.772542195618,"f_pressure_LV":4.9624977399337471}
+2025-10-01 14:13:26 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 53.95384531767083, 'm_pressure_LV': 1.2568904755295707, 'm_flow_MV': 13586.772542195618, 'f_pressure_LV': 4.962497739933747}
+2025-10-01 14:13:26 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 53.95384531767083, 'm_pressure_LV': 1.2568904755295707, 'm_flow_MV': 13586.772542195618, 'f_pressure_LV': 4.962497739933747}
+2025-10-01 14:13:26 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:26 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:26 python-controller  | controller: Loop Time Diff: 0.00037
+2025-10-01 14:13:26 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:26 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:26 python-controller  | 60 1759320806.2944808
+2025-10-01 14:13:26 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:26 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:26 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:26 python-controller  | controller: Time Diff: 0.00016
+2025-10-01 14:13:26 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:26 python-controller  | controller: Loop Time Diff: 0.00031
+2025-10-01 14:13:26 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:26 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:26 python-controller  | 137 1759320806.397421
+2025-10-01 14:13:26 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":53.536050098298482,"m_pressure_LV":1.8669242657722918,"m_flow_MV":11918.081289979111,"f_pressure_LV":6.1449637842930205}
+2025-10-01 14:13:26 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 53.53605009829848, 'm_pressure_LV': 1.8669242657722918, 'm_flow_MV': 11918.08128997911, 'f_pressure_LV': 6.1449637842930205}
+2025-10-01 14:13:26 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 53.53605009829848, 'm_pressure_LV': 1.8669242657722918, 'm_flow_MV': 11918.08128997911, 'f_pressure_LV': 6.1449637842930205}
+2025-10-01 14:13:26 python-controller  | controller: Time Diff: 0.00024
+2025-10-01 14:13:26 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:26 python-controller  | controller: Loop Time Diff: 0.00046
+2025-10-01 14:13:26 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:26 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:26 python-controller  | 60 1759320806.5002828
+2025-10-01 14:13:26 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:26 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:26 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:26 python-controller  | controller: Time Diff: 0.00018
+2025-10-01 14:13:26 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:26 python-controller  | controller: Loop Time Diff: 0.00037
+2025-10-01 14:13:26 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:26 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:26 python-controller  | 137 1759320806.603079
+2025-10-01 14:13:26 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":53.121781135754681,"m_pressure_LV":2.4315048718315495,"m_flow_MV":10382.594233454192,"f_pressure_LV":7.3198207045766583}
+2025-10-01 14:13:26 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 53.12178113575468, 'm_pressure_LV': 2.4315048718315495, 'm_flow_MV': 10382.594233454192, 'f_pressure_LV': 7.319820704576658}
+2025-10-01 14:13:26 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 53.12178113575468, 'm_pressure_LV': 2.4315048718315495, 'm_flow_MV': 10382.594233454192, 'f_pressure_LV': 7.319820704576658}
+2025-10-01 14:13:26 python-controller  | controller: Time Diff: 0.00017
+2025-10-01 14:13:26 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:26 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:26 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:26 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:26 python-controller  | 60 1759320806.7061334
+2025-10-01 14:13:26 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:26 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:26 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:26 python-controller  | controller: Time Diff: 0.00021
+2025-10-01 14:13:26 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:26 python-controller  | controller: Loop Time Diff: 0.00039
+2025-10-01 14:13:26 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:26 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:26 python-controller  | 137 1759320806.9092436
+2025-10-01 14:13:26 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":52.711045694793143,"m_pressure_LV":2.9468319295299619,"m_flow_MV":8989.3252118157252,"f_pressure_LV":8.4422198183540011}
+2025-10-01 14:13:26 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 52.71104569479314, 'm_pressure_LV': 2.946831929529962, 'm_flow_MV': 8989.325211815725, 'f_pressure_LV': 8.442219818354001}
+2025-10-01 14:13:26 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 52.71104569479314, 'm_pressure_LV': 2.946831929529962, 'm_flow_MV': 8989.325211815725, 'f_pressure_LV': 8.442219818354001}
+2025-10-01 14:13:26 python-controller  | controller: Time Diff: 0.00011
+2025-10-01 14:13:26 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:26 python-controller  | controller: Loop Time Diff: 0.00032
+2025-10-01 14:13:26 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:27 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:27 python-controller  | 60 1759320807.012279
+2025-10-01 14:13:27 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:27 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:27 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:27 python-controller  | controller: Time Diff: 0.00010
+2025-10-01 14:13:27 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:27 python-controller  | controller: Loop Time Diff: 0.00025
+2025-10-01 14:13:27 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:27 python-controller  | Bytes waiting in buffer: 135
+2025-10-01 14:13:27 python-controller  | 135 1759320807.1149626
+2025-10-01 14:13:27 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":52.303847821251431,"m_pressure_LV":3.4113752038174483,"m_flow_MV":7741.2010303467223,"f_pressure_LV":9.47608020435481}
+2025-10-01 14:13:27 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 52.30384782125143, 'm_pressure_LV': 3.4113752038174483, 'm_flow_MV': 7741.201030346722, 'f_pressure_LV': 9.47608020435481}
+2025-10-01 14:13:27 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 52.30384782125143, 'm_pressure_LV': 3.4113752038174483, 'm_flow_MV': 7741.201030346722, 'f_pressure_LV': 9.47608020435481}
+2025-10-01 14:13:27 python-controller  | controller: Time Diff: 0.00010
+2025-10-01 14:13:27 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:27 python-controller  | controller: Loop Time Diff: 0.00027
+2025-10-01 14:13:27 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:27 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:27 python-controller  | 60 1759320807.2177505
+2025-10-01 14:13:27 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:27 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:27 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:27 python-controller  | controller: Time Diff: 0.00012
+2025-10-01 14:13:27 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:27 python-controller  | controller: Loop Time Diff: 0.00030
+2025-10-01 14:13:27 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:27 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:27 python-controller  | 137 1759320807.3203127
+2025-10-01 14:13:27 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":51.900188121504932,"m_pressure_LV":3.8255610501338508,"m_flow_MV":6635.9407905195321,"f_pressure_LV":10.397740817669026}
+2025-10-01 14:13:27 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 51.90018812150493, 'm_pressure_LV': 3.825561050133851, 'm_flow_MV': 6635.940790519532, 'f_pressure_LV': 10.397740817669026}
+2025-10-01 14:13:27 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 51.90018812150493, 'm_pressure_LV': 3.825561050133851, 'm_flow_MV': 6635.940790519532, 'f_pressure_LV': 10.397740817669026}
+2025-10-01 14:13:27 python-controller  | controller: Time Diff: 0.00012
+2025-10-01 14:13:27 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:27 python-controller  | controller: Loop Time Diff: 0.00030
+2025-10-01 14:13:27 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:27 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:27 python-controller  | 60 1759320807.4231434
+2025-10-01 14:13:27 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:27 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:27 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:27 python-controller  | controller: Time Diff: 0.00011
+2025-10-01 14:13:27 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:27 python-controller  | controller: Loop Time Diff: 0.00030
+2025-10-01 14:13:27 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:27 python-controller  | Bytes waiting in buffer: 136
+2025-10-01 14:13:27 python-controller  | 136 1759320807.5259323
+2025-10-01 14:13:27 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":51.500063718398344,"m_pressure_LV":4.1913586765587416,"m_flow_MV":5667.1937047279462,"f_pressure_LV":11.19643191171642}
+2025-10-01 14:13:27 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 51.500063718398344, 'm_pressure_LV': 4.191358676558742, 'm_flow_MV': 5667.193704727946, 'f_pressure_LV': 11.19643191171642}
+2025-10-01 14:13:27 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 51.500063718398344, 'm_pressure_LV': 4.191358676558742, 'm_flow_MV': 5667.193704727946, 'f_pressure_LV': 11.19643191171642}
+2025-10-01 14:13:27 python-controller  | controller: Time Diff: 0.00016
+2025-10-01 14:13:27 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:27 python-controller  | controller: Loop Time Diff: 0.00037
+2025-10-01 14:13:27 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:27 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:27 python-controller  | 60 1759320807.628876
+2025-10-01 14:13:27 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:27 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:27 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:27 python-controller  | controller: Time Diff: 0.00013
+2025-10-01 14:13:27 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:27 python-controller  | controller: Loop Time Diff: 0.00034
+2025-10-01 14:13:27 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:27 python-controller  | Bytes waiting in buffer: 136
+2025-10-01 14:13:27 python-controller  | 136 1759320807.7317338
+2025-10-01 14:13:27 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":51.103468344592955,"m_pressure_LV":4.511842169872895,"m_flow_MV":4825.7320403975209,"f_pressure_LV":11.872329129747177}
+2025-10-01 14:13:27 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 51.103468344592955, 'm_pressure_LV': 4.511842169872895, 'm_flow_MV': 4825.732040397521, 'f_pressure_LV': 11.872329129747177}
+2025-10-01 14:13:27 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 51.103468344592955, 'm_pressure_LV': 4.511842169872895, 'm_flow_MV': 4825.732040397521, 'f_pressure_LV': 11.872329129747177}
+2025-10-01 14:13:27 python-controller  | controller: Time Diff: 0.00010
+2025-10-01 14:13:27 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:27 python-controller  | controller: Loop Time Diff: 0.00029
+2025-10-01 14:13:27 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:27 python-controller  | Bytes waiting in buffer: 60
+2025-10-01 14:13:27 python-controller  | 60 1759320807.8344073
+2025-10-01 14:13:27 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.15108816456484}
+2025-10-01 14:13:27 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:27 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15108816456484}
+2025-10-01 14:13:27 python-controller  | controller: Time Diff: 0.00011
+2025-10-01 14:13:27 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:27 python-controller  | controller: Loop Time Diff: 0.00031
+2025-10-01 14:13:27 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:27 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:27 python-controller  | 137 1759320807.9371874
+2025-10-01 14:13:27 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":50.710392535345314,"m_pressure_LV":4.7907828056062511,"m_flow_MV":4100.5542916613222,"f_pressure_LV":12.825183467324878}
+2025-10-01 14:13:27 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 50.71039253534531, 'm_pressure_LV': 4.790782805606251, 'm_flow_MV': 4100.554291661322, 'f_pressure_LV': 12.825183467324878}
+2025-10-01 14:13:27 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 50.71039253534531, 'm_pressure_LV': 4.790782805606251, 'm_flow_MV': 4100.554291661322, 'f_pressure_LV': 12.825183467324878}
+2025-10-01 14:13:27 python-controller  | controller: Time Diff: 0.00014
+2025-10-01 14:13:27 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:27 python-controller  | controller: Loop Time Diff: 0.00036
+2025-10-01 14:13:27 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:28 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:28 python-controller  | 61 1759320808.0399957
+2025-10-01 14:13:28 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.154483331325878}
+2025-10-01 14:13:28 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:28 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:28 python-controller  | controller: Time Diff: 0.00013
+2025-10-01 14:13:28 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:28 python-controller  | controller: Loop Time Diff: 0.00040
+2025-10-01 14:13:28 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:28 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:28 python-controller  | 137 1759320808.1440706
+2025-10-01 14:13:28 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":50.320823886584812,"m_pressure_LV":5.0323034982354615,"m_flow_MV":3479.8148915792872,"f_pressure_LV":25.958775908147675}
+2025-10-01 14:13:28 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 50.32082388658481, 'm_pressure_LV': 5.0323034982354615, 'm_flow_MV': 3479.814891579287, 'f_pressure_LV': 25.958775908147675}
+2025-10-01 14:13:28 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 50.32082388658481, 'm_pressure_LV': 5.0323034982354615, 'm_flow_MV': 3479.814891579287, 'f_pressure_LV': 25.958775908147675}
+2025-10-01 14:13:28 python-controller  | controller: Time Diff: 0.00020
+2025-10-01 14:13:28 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:28 python-controller  | controller: Loop Time Diff: 0.00042
+2025-10-01 14:13:28 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:28 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:28 python-controller  | 61 1759320808.2467408
+2025-10-01 14:13:28 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.154483331325878}
+2025-10-01 14:13:28 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:28 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:28 python-controller  | controller: Time Diff: 0.00014
+2025-10-01 14:13:28 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:28 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:28 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:28 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:28 python-controller  | 137 1759320808.3499637
+2025-10-01 14:13:28 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":49.934747349653819,"m_pressure_LV":5.2406081841260281,"m_flow_MV":2951.5479592824436,"f_pressure_LV":42.369782904729888}
+2025-10-01 14:13:28 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 49.93474734965382, 'm_pressure_LV': 5.240608184126028, 'm_flow_MV': 2951.5479592824436, 'f_pressure_LV': 42.36978290472989}
+2025-10-01 14:13:28 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 49.93474734965382, 'm_pressure_LV': 5.240608184126028, 'm_flow_MV': 2951.5479592824436, 'f_pressure_LV': 42.36978290472989}
+2025-10-01 14:13:28 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:28 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:28 python-controller  | controller: Loop Time Diff: 0.00044
+2025-10-01 14:13:28 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:28 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:28 python-controller  | 61 1759320808.4529643
+2025-10-01 14:13:28 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.154483331325878}
+2025-10-01 14:13:28 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:28 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:28 python-controller  | controller: Time Diff: 0.00029
+2025-10-01 14:13:28 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:28 python-controller  | controller: Loop Time Diff: 0.00049
+2025-10-01 14:13:28 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:28 python-controller  | Bytes waiting in buffer: 138
+2025-10-01 14:13:28 python-controller  | 138 1759320808.555922
+2025-10-01 14:13:28 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":49.552146269505712,"m_pressure_LV":6.800678190769176,"m_flow_MV":-0.00116541839600087,"f_pressure_LV":56.504460937542781}
+2025-10-01 14:13:28 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 49.55214626950571, 'm_pressure_LV': 6.800678190769176, 'm_flow_MV': -0.00116541839600087, 'f_pressure_LV': 56.50446093754278}
+2025-10-01 14:13:28 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 49.55214626950571, 'm_pressure_LV': 6.800678190769176, 'm_flow_MV': -0.00116541839600087, 'f_pressure_LV': 56.50446093754278}
+2025-10-01 14:13:28 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:28 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:28 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:28 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:28 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:28 python-controller  | 61 1759320808.6587894
+2025-10-01 14:13:28 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.154483331325878}
+2025-10-01 14:13:28 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:28 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:28 python-controller  | controller: Time Diff: 0.00010
+2025-10-01 14:13:28 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:28 python-controller  | controller: Loop Time Diff: 0.00026
+2025-10-01 14:13:28 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:28 python-controller  | Bytes waiting in buffer: 140
+2025-10-01 14:13:28 python-controller  | 140 1759320808.7615747
+2025-10-01 14:13:28 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":49.173036678989355,"m_pressure_LV":17.826090285059291,"m_flow_MV":-0.030442456664407636,"f_pressure_LV":57.828684061601464}
+2025-10-01 14:13:28 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 49.173036678989355, 'm_pressure_LV': 17.82609028505929, 'm_flow_MV': -0.030442456664407636, 'f_pressure_LV': 57.828684061601464}
+2025-10-01 14:13:28 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 49.173036678989355, 'm_pressure_LV': 17.82609028505929, 'm_flow_MV': -0.030442456664407636, 'f_pressure_LV': 57.828684061601464}
+2025-10-01 14:13:28 python-controller  | controller: Time Diff: 0.00018
+2025-10-01 14:13:28 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:28 python-controller  | controller: Loop Time Diff: 0.00045
+2025-10-01 14:13:28 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:28 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:28 python-controller  | 61 1759320808.8645325
+2025-10-01 14:13:28 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.154483331325878}
+2025-10-01 14:13:28 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:28 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:28 python-controller  | controller: Time Diff: 0.00022
+2025-10-01 14:13:28 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:28 python-controller  | controller: Loop Time Diff: 0.00040
+2025-10-01 14:13:28 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:28 python-controller  | Bytes waiting in buffer: 137
+2025-10-01 14:13:28 python-controller  | 137 1759320808.9673812
+2025-10-01 14:13:28 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":48.797414959335619,"m_pressure_LV":38.6055807039997,"m_flow_MV":-0.08566581417109044,"f_pressure_LV":52.767612295843534}
+2025-10-01 14:13:28 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 48.79741495933562, 'm_pressure_LV': 38.6055807039997, 'm_flow_MV': -0.08566581417109044, 'f_pressure_LV': 52.767612295843534}
+2025-10-01 14:13:28 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 48.79741495933562, 'm_pressure_LV': 38.6055807039997, 'm_flow_MV': -0.08566581417109044, 'f_pressure_LV': 52.767612295843534}
+2025-10-01 14:13:28 python-controller  | controller: Time Diff: 0.00016
+2025-10-01 14:13:28 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:28 python-controller  | controller: Loop Time Diff: 0.00036
+2025-10-01 14:13:29 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:29 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:29 python-controller  | 61 1759320809.0702534
+2025-10-01 14:13:29 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.154483331325878}
+2025-10-01 14:13:29 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:29 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:29 python-controller  | controller: Time Diff: 0.00014
+2025-10-01 14:13:29 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:29 python-controller  | controller: Loop Time Diff: 0.00029
+2025-10-01 14:13:29 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:29 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:29 python-controller  | 139 1759320809.1732674
+2025-10-01 14:13:29 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":48.558522247838773,"m_pressure_LV":63.460403031860679,"m_flow_MV":-0.15173000238991097,"f_pressure_LV":40.928048856231136}
+2025-10-01 14:13:29 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 48.55852224783877, 'm_pressure_LV': 63.46040303186068, 'm_flow_MV': -0.15173000238991097, 'f_pressure_LV': 40.928048856231136}
+2025-10-01 14:13:29 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 48.55852224783877, 'm_pressure_LV': 63.46040303186068, 'm_flow_MV': -0.15173000238991097, 'f_pressure_LV': 40.928048856231136}
+2025-10-01 14:13:29 python-controller  | controller: Time Diff: 0.00021
+2025-10-01 14:13:29 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:29 python-controller  | controller: Loop Time Diff: 0.00040
+2025-10-01 14:13:29 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:29 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:29 python-controller  | 61 1759320809.2761364
+2025-10-01 14:13:29 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.154483331325878}
+2025-10-01 14:13:29 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:29 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:29 python-controller  | controller: Time Diff: 0.00015
+2025-10-01 14:13:29 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:29 python-controller  | controller: Loop Time Diff: 0.00031
+2025-10-01 14:13:29 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:29 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:29 python-controller  | 139 1759320809.3793552
+2025-10-01 14:13:29 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":49.375245255104645,"m_pressure_LV":80.707077534078209,"m_flow_MV":-0.19755638875640796,"f_pressure_LV":26.467363962240732}
+2025-10-01 14:13:29 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 49.375245255104645, 'm_pressure_LV': 80.70707753407821, 'm_flow_MV': -0.19755638875640796, 'f_pressure_LV': 26.467363962240732}
+2025-10-01 14:13:29 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 49.375245255104645, 'm_pressure_LV': 80.70707753407821, 'm_flow_MV': -0.19755638875640796, 'f_pressure_LV': 26.467363962240732}
+2025-10-01 14:13:29 python-controller  | controller: Time Diff: 0.00036
+2025-10-01 14:13:29 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:29 python-controller  | controller: Loop Time Diff: 0.00059
+2025-10-01 14:13:29 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:29 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:29 python-controller  | 61 1759320809.4830992
+2025-10-01 14:13:29 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.154483331325878}
+2025-10-01 14:13:29 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:29 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:29 python-controller  | controller: Time Diff: 0.00018
+2025-10-01 14:13:29 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:29 python-controller  | controller: Loop Time Diff: 0.00033
+2025-10-01 14:13:29 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:29 python-controller  | Bytes waiting in buffer: 139
+2025-10-01 14:13:29 python-controller  | 139 1759320809.5859385
+2025-10-01 14:13:29 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":51.201312581058012,"m_pressure_LV":91.992402467336163,"m_flow_MV":-0.22752423083059248,"f_pressure_LV":13.034653039066491}
+2025-10-01 14:13:29 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 51.20131258105801, 'm_pressure_LV': 91.99240246733616, 'm_flow_MV': -0.22752423083059248, 'f_pressure_LV': 13.034653039066491}
+2025-10-01 14:13:29 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 51.20131258105801, 'm_pressure_LV': 91.99240246733616, 'm_flow_MV': -0.22752423083059248, 'f_pressure_LV': 13.034653039066491}
+2025-10-01 14:13:29 python-controller  | controller: Time Diff: 0.00023
+2025-10-01 14:13:29 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:29 python-controller  | controller: Loop Time Diff: 0.00046
+2025-10-01 14:13:29 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:29 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:29 python-controller  | 61 1759320809.6895018
+2025-10-01 14:13:29 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.154483331325878}
+2025-10-01 14:13:29 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:29 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:29 python-controller  | controller: Time Diff: 0.00019
+2025-10-01 14:13:29 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:29 python-controller  | controller: Loop Time Diff: 0.00038
+2025-10-01 14:13:29 matlab-scripts     | MATLAB: Sent pressure_mother message
+2025-10-01 14:13:29 python-controller  | Bytes waiting in buffer: 138
+2025-10-01 14:13:29 python-controller  | 138 1759320809.792638
+2025-10-01 14:13:29 python-controller  | Controller: Received from MATLAB: {"m_pressure_SA":53.582322256154512,"m_pressure_LV":97.10412841910086,"m_flow_MV":-0.24106803109254074,"f_pressure_LV":6.8664245171846838}
+2025-10-01 14:13:29 python-controller  | Controller: Parsed MATLAB response as JSON: {'m_pressure_SA': 53.58232225615451, 'm_pressure_LV': 97.10412841910086, 'm_flow_MV': -0.24106803109254074, 'f_pressure_LV': 6.866424517184684}
+2025-10-01 14:13:29 python-controller  | Controller: Received dictionary data: {'m_pressure_SA': 53.58232225615451, 'm_pressure_LV': 97.10412841910086, 'm_flow_MV': -0.24106803109254074, 'f_pressure_LV': 6.866424517184684}
+2025-10-01 14:13:29 python-controller  | controller: Time Diff: 0.00018
+2025-10-01 14:13:29 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:29 python-controller  | controller: Loop Time Diff: 0.00042
+2025-10-01 14:13:29 matlab-scripts     | MATLAB: Sent oxygen_mother message
+2025-10-01 14:13:29 python-controller  | Bytes waiting in buffer: 61
+2025-10-01 14:13:29 python-controller  | 61 1759320809.8959017
+2025-10-01 14:13:29 python-controller  | Controller: Received from MATLAB: {"oxy_m_art":98.029707823348375,"oxy_ivs":44.154483331325878}
+2025-10-01 14:13:29 python-controller  | Controller: Parsed MATLAB response as JSON: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:29 python-controller  | Controller: Received dictionary data: {'oxy_m_art': 98.02970782334837, 'oxy_ivs': 44.15448333132588}
+2025-10-01 14:13:29 python-controller  | controller: Time Diff: 0.00018
+2025-10-01 14:13:29 python-controller  | Controller: Dictionary data forwarded successfully
+2025-10-01 14:13:29 python-controller  | controller: Loop Time Diff: 0.00033
+2025-10-01 14:13:29 matlab-scripts     | MATLAB: Sent pressure_mother message

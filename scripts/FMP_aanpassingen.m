@@ -290,10 +290,9 @@ while qrst <= ncyclemax
 
         end
         send_message_to_controller = send_message_to_controller+1;
-        if send_message_to_controller >= 10   % Niet elke j versturen, zodat het plotten sneller gaat
+        if send_message_to_controller >= 125   % Niet elke j versturen, zodat het plotten sneller gaat
             pressure_mother = struct('m_pressure_SA', mpsav(2,j)*fackPaHg,'m_pressure_LV', mpsav(1,j)*fackPaHg, 'm_flow_MV', mqsav(3,j)*60*1000, 'f_pressure_LV', fpsav(1,j)*1000/133);
             send_message(server, pressure_mother, 'pressure_mother');
-            pause(0.1) % Wachten totdat hij is verstuurd als JSON (simulating real-time)
 
             if ico ==1
                 oxygen_mother = struct('oxy_m_art', NaN, 'oxy_ivs', NaN);
@@ -301,7 +300,6 @@ while qrst <= ncyclemax
                 oxygen_mother = struct('oxy_m_art', PmO2(ico-1), 'oxy_ivs', Putven(ico-1));
             end
             send_message(server, oxygen_mother, 'oxygen_mother');
-            pause(0.1);      % Wachten totdat hij is verstuurd als JSON (simulating real-time)
             send_message_to_controller = 0;
         end 
     end

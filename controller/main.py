@@ -311,9 +311,12 @@ async def send_script_to_matlab(script_name, params, ws):
         print(f"Controller: Sending command to MATLAB: {command}")
         matlab_socket.send(json.dumps(command).encode())
         print("Controller: Command sent to MATLAB")
+
         looptime = time.perf_counter()
+
         # Process responses
         while not should_stop:
+
             dif: float = 0.0
             start = time.perf_counter()
             diflooptime = start - looptime
